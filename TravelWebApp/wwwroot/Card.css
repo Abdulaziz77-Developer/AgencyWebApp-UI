@@ -1,0 +1,17 @@
+﻿/* Эффект для карточки */
+.card-hover {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+    /* Состояние при наведении */
+    .card-hover:hover {
+        transform: scale(1.03); /* Легкое увеличение */
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15) !important; /* Усиленная тень */
+    }
+
+        /* Опционально: эффект для изображения внутри при наведении */
+        .card-hover:hover img {
+            filter: brightness(90%);
+            transition: 0.3s;
+        }

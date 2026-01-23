@@ -1,0 +1,59 @@
+@page "/tour-details/{Id:int}"
+@using TravelWebApp.Components.Components_Ui
+
+@inject ITourService TourService 
+
+<PageTitle>Tour Details</PageTitle>
+
+@if (isLoading)
+{
+    <div class="container py-5 text-center">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+}
+else if (tour != null)
+{
+    <TourDetail Title="@tour.Title" 
+                Location="@tour.Region" 
+                Price="@tour.Price" 
+                ImageUrl="@tour.PhotoUrl" 
+                Description="@tour.Description" />
+}
+else
+{
+    <div class="container py-5 text-center">
+        <h2>Tour not found</h2>
+        <a href="/" class="btn btn-primary mt-3">Back to Home</a>
+    </div>
+}
+
+@code {
+    [Parameter] public int Id { get; set; }
+
+    // ������� tour nullable � �������� ��������� �������� ���� ���� ������
+    private TravelWebApp.Models.Tour? tour;
+    private bool isLoading = true;
+
+    // ���������� OnParametersSetAsync � ��������� ����������� ��� �������� � ��� ��������� ����������
+    protected override async Task OnParametersSetAsync()
+    {
+        isLoading = true;
+        try
+        {
+            Console.WriteLine("Id Start => " + Id);
+            tour = await TourService.GetTourByIdAsync(Id);
+            Console.WriteLine("Id End => " + tour?.Id);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error loading tour: " + ex.Message);
+            tour = null;
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+}

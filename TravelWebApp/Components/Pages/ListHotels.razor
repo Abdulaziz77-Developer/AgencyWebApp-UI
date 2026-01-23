@@ -1,0 +1,50 @@
+@page "/hotels"
+@using TravelWebApp.Components.Components_Ui
+@inject IHotelService HotelService
+
+@if (string.IsNullOrWhiteSpace(SearchTerm))
+{
+    <div class="container py-5">
+        <div class="row mb-5">
+            <div class="col-12 text-center">
+                <h2 class="display-6 fw-bold">Popular Hotels</h2>
+                <p class="text-muted">Discover our most loved accommodations</p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            @foreach (var hotel in hotels)
+            {
+                <div class="col-md-4">
+                    <CardHotel Hotel="@hotel" />
+                </div>
+            }
+        </div>
+    </div>
+}
+else
+{
+    <div class="row mt-4">
+        @foreach (var hotel in hotels.Where(h => string.IsNullOrEmpty(SearchTerm)
+                || h.Name.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)
+                || h.City.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)))
+        {
+            <div class="col-md-4">
+                <CardHotel Hotel="hotel" />
+            </div>
+        }
+    </div>
+}
+
+
+@code {
+    private List<Hotel> hotels = new List<Hotel>();
+    [Parameter] public string SearchTerm { get; set; } 
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        
+        hotels = await HotelService.GetHotelsAsync();
+    }
+}

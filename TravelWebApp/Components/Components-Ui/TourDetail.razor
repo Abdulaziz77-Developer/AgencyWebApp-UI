@@ -1,0 +1,230 @@
+@inject NavigationManager Navigation
+<div class="min-vh-100 bg-light pb-5">
+    <!-- Hero Section -->
+    <div class="position-relative bg-dark" style="height: 400px;">
+        <img src="@ImageUrl" 
+             alt="@Title" 
+             class="w-100 h-100 object-fit-cover opacity-75">
+        
+        <!-- Gradient Overlay -->
+        <div class="position-absolute top-0 start-0 w-100 h-100" 
+             style="background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);"></div>
+
+        <div class="position-absolute bottom-0 start-0 w-100 p-4 p-lg-5">
+            <div class="container">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <span class="badge bg-white text-dark border">Beach</span>
+                    <span class="badge bg-primary">Featured</span>
+                </div>
+                <h1 class="display-4 fw-bold text-white mb-2">@Title</h1>
+                <div class="d-flex align-items-center gap-4 text-white">
+                    <div class="d-flex align-items-center gap-1">
+                        <!-- Map Pin Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        @Location
+                    </div>
+                    <div class="d-flex align-items-center gap-1">
+                        <!-- Star Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-warning fill-warning"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+                        4.8 Rating
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container py-5">
+        <div class="row g-5">
+            <!-- Left Column: Details -->
+            <div class="col-lg-8 d-flex flex-column gap-4">
+                
+                <!-- Overview Card -->
+                <div class="card border rounded-4 shadow-sm">
+                    <div class="card-body p-4">
+                        <h2 class="h4 fw-bold mb-4">Description</h2>
+                        <p class="text-muted mb-4">@Description</p>
+                        
+                        <div class="row row-cols-2 row-cols-md-4 g-3">
+                            <!-- Duration -->
+                            <div class="col d-flex align-items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg>
+                                <div>
+                                    <div class="small text-muted">Duration</div>
+                                    <div class="fw-semibold">7 Days</div>
+                                </div>
+                            </div>
+                            <!-- Group Size -->
+                            <div class="col d-flex align-items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><path d="M16 3.128a4 4 0 0 1 0 7.744"></path><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                                <div>
+                                    <div class="small text-muted">Group Size</div>
+                                    <div class="fw-semibold">Max 20</div>
+                                </div>
+                            </div>
+                            <!-- Starts -->
+                            <div class="col d-flex align-items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg>
+                                <div>
+                                    <div class="small text-muted">Starts</div>
+                                    <div class="fw-semibold">Feb 15</div>
+                                </div>
+                            </div>
+                            <!-- Rating -->
+                            <div class="col d-flex align-items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+                                <div>
+                                    <div class="small text-muted">Rating</div>
+                                    <div class="fw-semibold">4.8/5</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Highlights Card -->
+                <div class="card border rounded-4 shadow-sm">
+                    <div class="card-body p-4">
+                        <h2 class="h4 fw-bold mb-4">Tour Highlights</h2>
+                        <div class="row row-cols-1 row-cols-md-2 g-3">
+                            @foreach(var highlight in Highlights)
+                            {
+                                <div class="col d-flex align-items-center gap-2">
+                                    <div class="bg-primary bg-opacity-10 rounded-circle p-1 d-flex align-items-center justify-content-center" style="width: 24px; height: 24px;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M20 6 9 17l-5-5"></path></svg>
+                                    </div>
+                                    <span class="text-secondary">@highlight</span>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Itinerary Card -->
+                <div class="card border rounded-4 shadow-sm">
+                    <div class="card-body p-4">
+                        <h2 class="h4 fw-bold mb-4">Day by Day Itinerary</h2>
+                        <div class="d-flex flex-column gap-4">
+                                <div class="d-flex gap-3 border-bottom pb-3 last-no-border">
+                                    <div class="flex-shrink-0">
+                                        <div class="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+                                            <span class="fw-bold text-primary">6</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h5 class="fw-semibold mb-1">@Title</h5>
+                                        <p class="text-muted mb-0">@Description</p>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Column: Booking -->
+            <div class="col-lg-4">
+                <div class="card border rounded-4 shadow-sm sticky-top" style="top: 100px; z-index: 10;">
+                    <div class="card-body p-4">
+                        <div class="mb-4">
+                            <div class="small text-muted mb-1">Price per person</div>
+                            <div class="d-flex align-items-baseline gap-2">
+                                <span class="h2 fw-bold text-primary mb-0">$@Price</span>
+                                <span class="small text-muted">All inclusive</span>
+                            </div>
+                        </div>
+
+                        <div class="mb-4 d-flex flex-column gap-3">
+                            <div>
+                                <label class="form-label fw-medium small">Select Date</label>
+                                <input type="date" class="form-control" value="2026-02-15">
+                            </div>
+                            <div>
+                                <label class="form-label fw-medium small">Travelers</label>
+                                <input type="number" class="form-control" min="1" max="20" value="2">
+                            </div>
+                        </div>
+
+                        <div class="border-top pt-3 mb-4">
+                            <div class="d-flex justify-content-between mb-2 text-muted">
+                                <span>Subtotal (2 travelers)</span>
+                                <span class="fw-semibold text-dark">$4,998</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2 text-muted">
+                                <span>Service fee</span>
+                                <span class="fw-semibold text-dark">$50</span>
+                            </div>
+                            <div class="d-flex justify-content-between pt-2 border-top mt-2">
+                                <span class="fw-bold">Total</span>
+                                <span class="fw-bold text-primary fs-5">$@Price</span>
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-column gap-2">
+                            <button class="btn btn-primary w-100 py-2 fw-medium" @onclick="GoToBookingPage"">Book Now</button>
+                            <button class="btn btn-outline-secondary w-100 py-2 fw-medium">Add to Wishlist</button>
+                        </div>
+
+                        <div class="mt-4 pt-3 border-top">
+                            <div class="d-flex align-items-center gap-2 small text-muted mb-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-success"><path d="M20 6 9 17l-5-5"></path></svg>
+                                Free cancellation up to 24 hours
+                            </div>
+                            <div class="d-flex align-items-center gap-2 small text-muted">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-success"><path d="M20 6 9 17l-5-5"></path></svg>
+                                Instant confirmation
+                            </div>
+                        </div>
+                        
+                        <!-- Availability -->
+                        <div class="mt-4 p-3 bg-primary bg-opacity-10 rounded-3">
+                            <div class="d-flex align-items-center gap-2 mb-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><path d="M16 3.128a4 4 0 0 1 0 7.744"></path><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                                <span class="fw-semibold text-primary small">Availability</span>
+                            </div>
+                            <p class="small text-primary mb-2">8 spots remaining out of 20</p>
+                            <div class="progress" style="height: 6px;">
+                                <div class="progress-bar bg-primary" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .fill-warning { fill: #ffc107; }
+    .last-no-border:last-child { border-bottom: 0 !important; padding-bottom: 0 !important; }
+</style>
+
+@code {
+    [Parameter] public string? Title { get; set; } 
+    [Parameter] public string? Location { get; set; } 
+    [Parameter] public decimal Price { get; set; }
+    [Parameter] public string? ImageUrl { get; set; }
+    [Parameter] public string? Description {get;set;}
+
+    private List<string> Highlights = new() 
+    { 
+        "Professional tour guide", "All meals included", "Luxury accommodation", 
+        "Airport transfers", "Travel insurance", "24/7 support" 
+    };
+
+    public void GoToBookingPage()
+    {
+        Navigation.NavigateTo("/booking");
+    }
+    private List<(string Day, string Title, string Description)> Itinerary = new()
+    {
+        ("D1", "Arrival & Welcome", "Arrive at destination, hotel check-in, and welcome dinner"),
+        ("D2", "City Exploration", "Guided tour of major attractions and landmarks"),
+        ("D3", "Adventure Activities", "Exciting outdoor activities and local experiences"),
+        ("D4", "Cultural Immersion", "Visit local markets, museums, and cultural sites"),
+        ("D5", "Leisure & Relaxation", "Free day to explore at your own pace"),
+        ("D6", "Final Exploration", "Last-minute shopping and farewell dinner"),
+        ("D7", "Departure", "Hotel checkout and airport transfer")
+    };
+}

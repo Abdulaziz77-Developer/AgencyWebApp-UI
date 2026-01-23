@@ -1,0 +1,174 @@
+@* @page "/login"
+@using TravelWebApp.Components.Components_Ui
+
+<div class="min-vh-100 d-flex align-items-center justify-content-center" style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);">
+    <div class="card border-0 shadow-lg rounded-4 w-100" style="max-width: 450px;">
+        <div class="card-header bg-transparent border-0 pt-5 pb-4 text-center">
+            <div class="d-flex justify-content-center mb-4">
+                <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center text-white fw-bold fs-2" style="width: 64px; height: 64px;">
+                    A
+                </div>
+            </div>
+            <h2 class="fw-bold mb-1">Welcome Back</h2>
+            <p class="text-muted mb-0">Sign in to your account to continue</p>
+        </div>
+        
+        <div class="card-body px-5 pb-5">
+            <form>
+                <div class="mb-4">
+                    <label for="email" class="form-label small fw-bold">Email</label>
+                    <div class="position-relative">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="position-absolute top-50 translate-middle-y text-muted" style="left: 15px;">
+                            <path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path>
+                            <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                        </svg>
+                        <input type="email" class="form-control ps-5 py-2" id="email" placeholder="name@example.com" required>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label for="password" class="form-label small fw-bold">Password</label>
+                    <div class="position-relative">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="position-absolute top-50 translate-middle-y text-muted" style="left: 15px;">
+                            <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                        <input type="password" class="form-control ps-5 py-2" id="password" placeholder="Enter your password" required>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="remember">
+                        <label class="form-check-label small text-muted" for="remember">
+                            Remember me
+                        </label>
+                    </div>
+                    <button type="button" class="btn btn-link text-decoration-none p-0 small">Forgot password?</button>
+                </div>
+
+                <div class="alert alert-primary border-0 bg-primary bg-opacity-10 small mb-4" role="alert">
+                    <p class="fw-bold text-primary mb-2">Demo Accounts:</p>
+                    <div class="mb-1 text-primary"><span class="fw-bold">Admin:</span> admin@agencyweb.com</div>
+                    <div class="mb-2 text-primary"><span class="fw-bold">User:</span> john.doe@example.com</div>
+                    <div class="text-muted fst-italic" style="font-size: 0.8rem;">Password: any password (demo mode)</div>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 py-2 mb-4">Sign In</button>
+
+                <div class="text-center small text-muted mb-3">
+                    Don't have an account? <a href="/signup" class="text-primary text-decoration-none fw-bold">Sign up</a>
+                </div>
+                
+                <div class="text-center">
+                    <a href="/" class="text-muted text-decoration-none small">&larr; Back to Home</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> *@
+
+@page "/login"
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Components.Authorization
+@inject TravelWebApp.Auth.AuthService AuthService
+@inject NavigationManager Navigation
+@inject AuthenticationStateProvider AuthStateProvider
+
+<div class="min-vh-100 d-flex align-items-center justify-content-center"
+     style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);">
+    <div class="card border-0 shadow-lg rounded-4 w-100" style="max-width: 450px;">
+        <div class="card-header bg-transparent border-0 pt-5 pb-4 text-center">
+            <h2 class="fw-bold mb-1">Welcome Back</h2>
+            <p class="text-muted mb-0">Sign in to your account</p>
+        </div>
+
+        <div class="card-body px-5 pb-5">
+            <form @onsubmit:preventDefault>
+
+                @if (errorMessage != null)
+                {
+                    <div class="alert alert-danger small mb-3">
+                        @errorMessage
+                    </div>
+                }
+
+                <div class="mb-4">
+                    <label class="form-label small fw-bold">Email</label>
+                    <input type="email"
+                           class="form-control"
+                           @bind="email"
+                           required />
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label small fw-bold">Password</label>
+                    <input type="password"
+                           class="form-control"
+                           @bind="password"
+                           required />
+                </div>
+
+                <button type="button"
+                        class="btn btn-primary w-100 py-2"
+                        @onclick="HandleLogin"
+                        disabled="@isLoading">
+                    @(isLoading ? "Signing in..." : "Sign In")
+                </button>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string email = string.Empty;
+    private string password = string.Empty;
+    private string? errorMessage;
+    private bool isLoading = false;
+
+    private async Task HandleLogin()
+    {
+        errorMessage = null;
+        isLoading = true;
+
+        // Пытаемся залогиниться через AuthService
+        var success = await AuthService.LoginAsync(email, password);
+
+        isLoading = false;
+
+        if (!success)
+        {
+            errorMessage = "Invalid email or password";
+            return;
+        }
+
+        // Получаем текущее состояние аутентификации
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity?.IsAuthenticated != true)
+        {
+            errorMessage = "User is not authenticated";
+            return;
+        }
+
+        // Получаем роль пользователя из claims (ClaimTypes.Role или "role")
+        var role = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role || c.Type == "role")?.Value;
+        Console.WriteLine("User role: " + role);
+
+        // Навигация в зависимости от роли
+        if (!string.IsNullOrEmpty(role) && role.Equals("Admin", StringComparison.OrdinalIgnoreCase))
+        {
+            Navigation.NavigateTo("/admindashboard");
+        }
+        else if(!string.IsNullOrEmpty(role) && role.Equals("User",StringComparison.OrdinalIgnoreCase))
+        {
+            Navigation.NavigateTo("/userdashboard");
+        }
+        else
+        {
+            Navigation.NavigateTo("/");
+        }
+    }
+} 

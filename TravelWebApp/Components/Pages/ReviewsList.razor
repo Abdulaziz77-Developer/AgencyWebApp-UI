@@ -1,0 +1,60 @@
+@page "/reviews-list"
+@using TravelWebApp.Models
+@using TravelWebApp.Services.Interfaces
+@using System.Collections.Generic
+@inject IReviewService ReviewService
+@rendermode InteractiveServer
+
+<h3>Reviews List</h3>
+
+@if (reviews == null)
+{
+    <p><em>Loading...</em></p>
+}
+else if (reviews.Count == 0)
+{
+    <p>No reviews found.</p>
+}
+else
+{
+    <div class="row">
+        @foreach (var review in reviews)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Review #@review.Id</h5>
+                        <p class="card-text">Rating: 5</p>
+                        <p class="card-text">@review.Text</p>
+                        <button class="btn btn-danger" @onclick="() => DeleteReview(review.Id)">Delete</button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    private List<ReviewDTO>? reviews;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            reviews = await ReviewService.GetReviewsAsync();
+        }
+        catch
+        {
+            reviews = new List<ReviewDTO>();
+        }
+    }
+
+    private async Task DeleteReview(int id)
+    {
+        var success = await ReviewService.DeleteReviewAsync(id);
+        if (success)
+        {
+            reviews = await ReviewService.GetReviewsAsync();
+        }
+    }
+}

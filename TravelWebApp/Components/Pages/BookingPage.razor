@@ -1,0 +1,469 @@
+@* @page "/booking"
+@using TravelWebApp.Components.Components_Ui
+@using System.ComponentModel.DataAnnotations
+@using TravelWebApp.Services.Interfaces
+@using TravelWebApp.Models
+@using TravelWebApp.Auth
+@inject IBookingService BookingService
+@inject AuthenticationStateProvider AuthStateProvider
+@inject NavigationManager Navigation
+
+<Navbar />
+
+<div class="min-vh-100 bg-light">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4 p-md-5">
+                        <h2 class="fw-bold mb-4 text-center">Book Your Trip</h2>
+
+                        <!-- Booking Type Tabs -->
+                        <ul class="nav nav-pills nav-fill mb-4">
+                            <li class="nav-item">
+                                <button class="nav-link @(bookingType == "Tour" ? "active" : "")" 
+                                        @onclick='() => SetBookingType("Tour")'>Tours</button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link @(bookingType == "Hotel" ? "active" : "")" 
+                                        @onclick='() => SetBookingType("Hotel")'>Hotels</button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link @(bookingType == "Flight" ? "active" : "")" 
+                                        @onclick='() => SetBookingType("Flight")'>Flights</button>
+                            </li>
+                        </ul>
+
+                        <EditForm Model="@bookingModel" OnValidSubmit="HandleBooking">
+                            <DataAnnotationsValidator />
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Destination</label>
+                                <InputText @bind-Value="bookingModel.Destination" class="form-control" placeholder="Where do you want to go?" />
+                                <ValidationMessage For="@(() => bookingModel.Destination)" />
+                            </div>
+
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Check-in / Start Date</label>
+                                    <InputDate @bind-Value="bookingModel.StartDate" class="form-control" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Check-out / End Date</label>
+                                    <InputDate @bind-Value="bookingModel.EndDate" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label">Number of Guests</label>
+                                <InputNumber @bind-Value="bookingModel.Guests" class="form-control" min="1" />
+                                <ValidationMessage For="@(() => bookingModel.Guests)" />
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100 py-2">
+                                Book @bookingType
+                            </button>
+                        </EditForm>
+
+                        @if (bookingSubmitted)
+                        {
+                            <div class="alert alert-success mt-3">
+                                Your @bookingType booking request has been received!
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<Footer/>
+
+@code {
+    private string bookingType = "Tour";
+    private bool bookingSubmitted = false;
+    private BookingRequest bookingModel = new BookingRequest();
+
+    private void SetBookingType(string type)
+    {
+        bookingType = type;
+        bookingSubmitted = false;
+    }
+
+    private async Task HandleBooking()
+    {
+        var customAuthStateProvider = (CustomAuthStateProvider)AuthStateProvider;
+        var userId = customAuthStateProvider.GetUserId();
+
+        if (userId == null)
+        {
+            Navigation.NavigateTo("/login");
+            return;
+        }
+
+        var booking = new Booking
+        {
+            UserId = userId.Value,
+            BookingDate = DateTime.Now,
+            Status = "Pending",
+            TotalPrice = 0 // Price calculation logic would go here
+        };
+
+        await BookingService.CreateBookingAsync(booking);
+        bookingSubmitted = true;
+    }
+
+    public class BookingRequest
+    {
+        [Required(ErrorMessage = "Destination is required")]
+        public string Destination { get; set; } = "";
+
+        public DateTime StartDate { get; set; } = DateTime.Today;
+        public DateTime EndDate { get; set; } = DateTime.Today.AddDays(1);
+
+        [Range(1, 20, ErrorMessage = "Please enter between 1 and 20 guests")]
+        public int Guests { get; set; } = 1;
+    }
+} *@
+@* @page "/booking"
+@using Microsoft.AspNetCore.Components.Authorization
+@using System.ComponentModel.DataAnnotations
+@using TravelWebApp.Services.Interfaces
+@using TravelWebApp.Models
+@using TravelWebApp.Auth
+@inject IBookingService BookingService
+@inject AuthenticationStateProvider AuthStateProvider
+@inject ITourService TourService
+@inject IHotelService HotelService
+@inject IFlightService FlightService
+@inject NavigationManager Navigation
+
+<Navbar />
+
+<div class="min-vh-100 bg-light">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4 p-md-5">
+                        <h2 class="fw-bold mb-4 text-center">Book Your Trip</h2>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Booking Type</label>
+                            <select @bind="bookingType" class="form-select form-select-lg">
+                                <option value="Tour">Tour</option>
+                                <option value="Hotel">Hotel</option>
+                                <option value="Flight">Flight</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Select @bookingType</label>
+                            <select @bind="selectedEntityId" class="form-select form-select-lg">
+                                <option value="0">-- Choose your @bookingType --</option>
+                                @if (bookingType == "Tour")
+                                {
+                                    @foreach (var item in tours)
+                                    {
+                                        <option value="@item.Id">@item.Title</option>
+                                    }
+                                }
+                                else if (bookingType == "Hotel")
+                                {
+                                    @foreach (var item in hotels)
+                                    {
+                                        <option value="@item.Id">@item.Name</option>
+                                    }
+                                }
+                                else if (bookingType == "Flight")
+                                {
+                                    @foreach (var item in flights)
+                                    {
+                                        <option value="@item.id">@item.fromCity - @item.toCity</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+
+                        <EditForm Model="@bookingModel" OnValidSubmit="HandleBooking">
+                            <DataAnnotationsValidator />
+
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Check-in / Start Date</label>
+                                    <InputDate @bind-Value="bookingModel.StartDate" class="form-control" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Check-out / End Date</label>
+                                    <InputDate @bind-Value="bookingModel.EndDate" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label">Number of Guests</label>
+                                <InputNumber @bind-Value="bookingModel.Guests" class="form-control" min="1" />
+                                <ValidationMessage For="@(() => bookingModel.Guests)" />
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100 py-2" @onclick="HandleBooking">
+                                Book @bookingType
+                            </button>
+                        </EditForm>
+
+                        @if (bookingSubmitted)
+                        {
+                            <div class="alert alert-success mt-3">
+                                Your @bookingType booking request has been received!
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<Footer/>
+
+@code {
+    private bool bookingSubmitted = false;
+    private BookingRequest bookingModel = new BookingRequest();
+    private string bookingType = "Tour";
+    private int selectedEntityId = 0;
+
+    private List<Tour> tours = new();
+    private List<Hotel> hotels = new();
+    private List<Flight> flights = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        tours = await TourService.GetToursAsync();
+        hotels = await HotelService.GetHotelsAsync();
+        flights = await FlightService.GetFlightsAsync();
+
+        // Если есть параметры из ReturnUrl
+        var uri = Navigation.ToAbsoluteUri(Navigation.Uri);
+        var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
+        if (!string.IsNullOrEmpty(query["type"]))
+            bookingType = query["type"]!;
+        if (int.TryParse(query["id"], out int id))
+            selectedEntityId = id;
+    }
+
+    private async Task HandleBooking()
+    {
+        var customAuthProvider = (CustomAuthStateProvider)AuthStateProvider;
+        var userId = customAuthProvider.GetUserId();
+
+        if (userId == null)
+        {
+            // Сохраняем текущую страницу, чтобы после логина вернуться сюда
+            var returnUrl = $"/booking?type={bookingType}&id={selectedEntityId}";
+            Navigation.NavigateTo($"/login?ReturnUrl={Uri.EscapeDataString(returnUrl)}");
+            return;
+        }
+
+        if (selectedEntityId == 0) return;
+
+        var booking = new TravelWebApp.Models.Booking
+        {
+            UserId = userId.Value,
+            BookingDate = DateTime.Now,
+            Status = "Pending",
+            TotalPrice = 0
+        };
+
+        switch (bookingType)
+        {
+            case "Tour":
+                booking.TourId = selectedEntityId;
+                break;
+            case "Hotel":
+                booking.HotelId = selectedEntityId;
+                break;
+            case "Flight":
+                booking.FlightId = selectedEntityId;
+                break;
+        }
+
+        var success = await BookingService.CreateBookingAsync(booking);
+        if (success)
+        {
+            bookingSubmitted = true;
+        }
+    }
+
+    public class BookingRequest
+    {
+        public DateTime StartDate { get; set; } = DateTime.Today;
+        public DateTime EndDate { get; set; } = DateTime.Today.AddDays(1);
+        [Range(1, 20, ErrorMessage = "Please enter between 1 and 20 guests")]
+        public int Guests { get; set; } = 1;
+    }
+} *@
+@page "/bookingpage"
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Components.Authorization
+@using TravelWebApp.Services.Interfaces
+@using TravelWebApp.Models
+@using Microsoft.AspNetCore.Http
+@inject IBookingService BookingService
+@inject ITourService TourService
+@inject IHotelService HotelService
+@inject IFlightService FlightService
+@inject NavigationManager Navigation
+@inject IHttpContextAccessor HttpContextAccessor
+
+<Navbar />
+
+<div class="min-vh-100 bg-light">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4 p-md-5">
+                        <h2 class="fw-bold mb-4 text-center">Book Your Trip</h2>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Booking Type</label>
+                            <select @bind="bookingType" class="form-select form-select-lg">
+                                <option value="Tour">Tour</option>
+                                <option value="Hotel">Hotel</option>
+                                <option value="Flight">Flight</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Select @bookingType</label>
+                            <select @bind="selectedEntityId" class="form-select form-select-lg">
+                                <option value="0">-- Choose your @bookingType --</option>
+                                @if (bookingType == "Tour")
+                                {
+                                    @foreach (var item in tours)
+                                    {
+                                        <option value="@item.Id">@item.Title</option>
+                                    }
+                                }
+                                else if (bookingType == "Hotel")
+                                {
+                                    @foreach (var item in hotels)
+                                    {
+                                        <option value="@item.Id">@item.Name</option>
+                                    }
+                                }
+                                else if (bookingType == "Flight")
+                                {
+                                    @foreach (var item in flights)
+                                    {
+                                        <option value="@item.id">@item.fromCity - @item.toCity</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+
+                        <EditForm Model="@bookingModel" OnValidSubmit="HandleBooking">
+                            <DataAnnotationsValidator />
+
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Check-in / Start Date</label>
+                                    <InputDate @bind-Value="bookingModel.StartDate" class="form-control" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Check-out / End Date</label>
+                                    <InputDate @bind-Value="bookingModel.EndDate" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label">Number of Guests</label>
+                                <InputNumber @bind-Value="bookingModel.Guests" class="form-control" min="1" />
+                                <ValidationMessage For="@(() => bookingModel.Guests)" />
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100 py-2">
+                                Book @bookingType
+                            </button>
+                        </EditForm>
+
+                        @if (bookingSubmitted)
+                        {
+                            <div class="alert alert-success mt-3">
+                                Your @bookingType booking request has been received!
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<Footer />
+
+@code {
+    private bool bookingSubmitted = false;
+    private BookingRequest bookingModel = new BookingRequest();
+    private string bookingType = "Tour";
+    private int selectedEntityId = 0;
+
+    private List<Tour> tours = new();
+    private List<Hotel> hotels = new();
+    private List<Flight> flights = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        tours = await TourService.GetToursAsync();
+        hotels = await HotelService.GetHotelsAsync();
+        flights = await FlightService.GetFlightsAsync();
+
+        // Параметры ReturnUrl
+        var uri = Navigation.ToAbsoluteUri(Navigation.Uri);
+        var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
+        if (!string.IsNullOrEmpty(query["type"]))
+            bookingType = query["type"]!;
+        if (int.TryParse(query["id"], out int id))
+            selectedEntityId = id;
+    }
+
+    private async Task HandleBooking()
+    {
+        // 🔹 Получаем UserId из Claims (Cookie Authentication)
+        var user = HttpContextAccessor.HttpContext?.User;
+        var userIdClaim = user?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+        if (userIdClaim == null || !int.TryParse(userIdClaim, out int userId))
+        {
+            // Если не аутентифицирован, перенаправляем на login с ReturnUrl
+            var returnUrl = $"/booking-page?type={bookingType}&id={selectedEntityId}";
+            Navigation.NavigateTo($"/login?ReturnUrl={Uri.EscapeDataString(returnUrl)}");
+            return;
+        }
+
+        if (selectedEntityId == 0) return;
+
+        TravelWebApp.Models.Booking booking = new TravelWebApp.Models.Booking
+        {
+                UserId = userId,
+                BookingDate = DateTime.Now
+        };
+
+        switch (bookingType)
+        {
+            case "Tour": booking.TourId = selectedEntityId; break;
+            case "Hotel": booking.HotelId = selectedEntityId; break;
+            case "Flight": booking.FlightId = selectedEntityId; break;
+        }
+
+        var success = await BookingService.CreateBookingAsync(booking);
+        if (success) bookingSubmitted = true;
+    }
+
+    public class BookingRequest
+    {
+        public DateTime StartDate { get; set; } = DateTime.Today;
+        public DateTime EndDate { get; set; } = DateTime.Today.AddDays(1);
+        [Range(1, 20, ErrorMessage = "Please enter between 1 and 20 guests")]
+        public int Guests { get; set; } = 1;
+    }
+}

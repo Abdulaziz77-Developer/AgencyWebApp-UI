@@ -1,0 +1,48 @@
+@using TravelWebApp.Components.Components_Ui
+@inject IFlightService FlightService
+
+@if(string.IsNullOrWhiteSpace(SearchTerm))
+{
+    <div class="container py-5">
+        <div class="row mb-5">
+            <div class="col-12 text-center">
+                <h2 class="display-6 fw-bold">Popular Flights</h2>
+                <p class="text-muted">Best deals on flights to top destinations</p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            @foreach (var flight in flights)
+            {
+                <div class="col-lg-6">
+                    <CardFlight Flight="@flight" />
+                </div>
+            }
+        </div>
+    </div>
+}
+else
+{
+    <div class="row mt-4">
+        @foreach (var flight in flights.Where(f => string.IsNullOrEmpty(SearchTerm)
+            || f.fromCity.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)
+            || f.toCity.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)))
+    {
+        <div class="col-lg-6">
+            <CardFlight Flight="flight" />
+        </div>
+        }
+    </div>
+}
+
+
+@code {
+  
+   public List<Flight> flights = new();
+
+   [Parameter] public string SearchTerm { get; set; }
+  protected override async Task OnInitializedAsync()
+  {
+    flights = await FlightService.GetFlightsAsync();
+  }
+}

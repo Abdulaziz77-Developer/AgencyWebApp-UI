@@ -1,0 +1,176 @@
+
+@page "/contact"
+@using TravelWebApp.Components.Components_Ui
+
+<Navbar />
+
+<div class="min-vh-100 bg-light">
+    <!-- Hero Section -->
+    <section class="text-white py-5" style="background: linear-gradient(to right, #2563eb, #1e40af);">
+        <div class="container py-4">
+            <div class="col-lg-8">
+                <h1 class="display-4 fw-bold mb-3">Get in Touch</h1>
+                <p class="lead text-white-50 mb-0">Have questions? We're here to help you plan your perfect journey</p>
+            </div>
+        </div>
+    </section>
+
+   <section class="py-5">       
+    <div class="container">
+           <div class="row g-4">
+               <!-- Left Column: Contact Info -->
+                             <div class="col-lg-4">
+                 <div class="d-flex flex-column gap-4">
+                     <!-- Phone Card -->
+                     <div class="card border rounded-4 shadow-sm">
+                         <div class="card-body p-4">                             <div class="d-flex align-items-start gap-3">
+                                 <div class="bg-primary bg-opacity-10 p-3 rounded-3 text-primary d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone">
+                                        <path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"></path>                                     </svg>
+                                    </div>
+                                   <div>
+                                       <h5 class="fw-semibold mb-1">Phone</h5>
+                                       <p class="text-muted mb-0">+1 (555) 123-4567</p>
+                                       <p class="text-muted mb-0">Mon-Fri: 9am - 6pm</p>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                       <!-- Email Card -->
+                       <div class="card border rounded-4 shadow-sm">
+                           <div class="card-body p-4">
+                               <div class="d-flex align-items-start gap-3">
+                                   <div class="bg-primary bg-opacity-10 p-3 rounded-3 text-primary d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+                                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail">
+                                           <path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path>
+                                           <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                                       </svg>
+                                   </div>
+                                   <div>
+                                       <h5 class="fw-semibold mb-1">Email</h5>
+                                       <p class="text-muted mb-0">info@agencyweb.com</p>                                       <p class="text-muted mb-0">support@agencyweb.com</p>
+                                   </div>
+                              </div>
+                          </div>
+                      </div>
+                      <!-- Office Card -->
+                      <div class="card border rounded-4 shadow-sm">
+                          <div class="card-body p-4">
+                              <div class="d-flex align-items-start gap-3">
+                                  <div class="bg-primary bg-opacity-10 p-3 rounded-3 text-primary d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin">
+                                          <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path>
+                                          <circle cx="12" cy="10" r="3"></circle>
+                                      </svg>
+                                  </div>
+                                  <div>
+                                      <h5 class="fw-semibold mb-1">Office</h5>
+                                      <p class="text-muted mb-0">123 Travel Street</p>
+                                      <p class="text-muted mb-0">New York, NY 10001</p>
+                                      <p class="text-muted mb-0">United States</p>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                     <!-- Emergency Support Card -->
+                     <div class="card border rounded-4 bg-primary text-white shadow-sm">
+                         <div class="card-body p-4">
+                             <h5 class="fw-semibold mb-2">Emergency Support</h5>
+                             <p class="text-white-50 mb-4">24/7 emergency assistance for active bookings</p>
+                             <button class="btn btn-light w-100 text-primary fw-medium d-flex align-items-center justify-content-center gap-2">
+                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone">
+                                     <path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"></path>
+                                 </svg>
+                                 Call Emergency Line
+                             </button>
+                            </div>
+                    </div>
+                   </div>
+               </div>
+                <!-- Right Column: Form & FAQ -->
+               <div class="col-lg-8">
+                   <!-- Contact Form -->
+                   <div class="card border rounded-4 shadow-sm mb-4">
+                       <div class="card-header bg-white border-bottom-0 pt-4 px-4">
+                           <h2 class="h3 fw-bold mb-1">Send us a Message</h2>
+                           <p class="text-muted mb-0">Fill out the form below and we'll get back to you within 24 hours</p>
+                       </div>
+                       <div class="card-body p-4">
+                           <form>
+                               <div class="row g-3">
+                                   <div class="col-md-6">
+                                       <label for="firstName" class="form-label fw-medium small">First Name</label>
+                                       <input type="text" class="form-control" id="firstName" placeholder="John" required>
+                                   </div>
+                                   <div class="col-md-6">
+                                       <label for="lastName" class="form-label fw-medium small">Last Name</label>                                       <input type="text" class="form-control" id="lastName" placeholder="Doe" required>
+                                 </div>
+                                   <div class="col-md-6">
+                                       <label for="email" class="form-label fw-medium small">Email</label>
+                                       <input type="email" class="form-control" id="email" placeholder="john@example.com" required>
+                                   </div>
+                                   <div class="col-md-6">
+                                       <label for="phone" class="form-label fw-medium small">Phone Number</label>
+                                       <input type="tel" class="form-control" id="phone" placeholder="+1 (555) 000-0000">
+                                   </div>
+                                   <div class="col-12">
+                                       <label for="subject" class="form-label fw-medium small">Subject</label>
+                                       <input type="text" class="form-control" id="subject" placeholder="How can we help you?" required>
+                                   </div>
+                                   <div class="col-12">
+                                       <label for="message" class="form-label fw-medium small">Message</label>
+                                       <textarea class="form-control" id="message" rows="5" placeholder="Tell us more about your inquiry..." required></textarea>
+                                   </div>
+                                   <div class="col-12">
+                                       <div class="form-check">
+                                           <input class="form-check-input" type="checkbox" id="consent" required>
+                                           <label class="form-check-label text-muted small" for="consent">
+                                               I agree to receive communications from AgencyWeb regarding my inquiry                                           </label>
+                                       </div>
+                                   </div>
+                                   <div class="col-12">
+                                       <button type="submit" class="btn btn-primary w-100 d-flex align-items-center justify-content-center gap-2">
+                                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send">
+                                               <path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"></path>
+                                               <path d="m21.854 2.147-10.94 10.939"></path>                                          </svg>
+                                           Send Message
+                                       </button>
+                                   </div>
+                               </div>
+                           </form>
+                       </div>
+                    </div>
+
+                    <!-- FAQ Section -->
+                    <div class="card border rounded-4 shadow-sm">
+                        <div class="card-header bg-white border-bottom-0 pt-4 px-4">
+                            <h3 class="h5 fw-bold mb-0">Frequently Asked Questions</h3>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="d-flex flex-column gap-4">
+                                <div>
+                                    <h6 class="fw-bold mb-1">What are your business hours?</h6>
+                                    <p class="text-muted mb-0">Our office is open Monday through Friday, 9:00 AM to 6:00 PM EST. Emergency support is available 24/7 for active bookings.</p>
+                                </div>
+                                <div>
+                                    <h6 class="fw-bold mb-1">How long does it take to get a response?</h6>
+                                    <p class="text-muted mb-0">We typically respond to all inquiries within 24 hours during business days.</p>
+                                </div>
+                                <div>
+                                    <h6 class="fw-bold mb-1">Can I visit your office in person?</h6>
+                                    <p class="text-muted mb-0">Yes! We welcome visitors to our office. Please call ahead to schedule an appointment with one of our travel consultants.</p>
+                                </div>
+                            </div>
+                        </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+    </section>
+</div>
+
+
+<!--
+[PROMPT_SUGGESTION]Create a TourDetails.razor page to display full information for a single tour when clicked.[/PROMPT_SUGGESTION]
+[PROMPT_SUGGESTION]Add a "Book Now" modal to the TourDetails page.[/PROMPT_SUGGESTION]
+-->

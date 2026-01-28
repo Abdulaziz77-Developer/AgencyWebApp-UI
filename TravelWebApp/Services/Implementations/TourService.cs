@@ -15,7 +15,7 @@ namespace TravelWebApp.Services
         {
             _httpClient = httpClient;
         }
-
+        
         // GET: api/tours
         public async Task<List<Tour>> GetToursAsync()
         {

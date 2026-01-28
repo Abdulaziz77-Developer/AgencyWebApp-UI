@@ -15,6 +15,7 @@
         <div class="row g-4">
             @foreach (var hotel in hotels)
             {
+                
                 <div class="col-md-4">
                     <CardHotel Hotel="@hotel" />
                 </div>
@@ -39,7 +40,7 @@ else
 
 @code {
     private List<Hotel> hotels = new List<Hotel>();
-    [Parameter] public string SearchTerm { get; set; } 
+    [Parameter] public string? SearchTerm { get; set; } 
 
 
     protected override async Task OnInitializedAsync()

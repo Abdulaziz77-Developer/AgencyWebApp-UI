@@ -159,46 +159,56 @@
     }
 } *@
 @page "/reviews"
+@using System.Text.Json.Serialization
 @using TravelWebApp.Models
 @using TravelWebApp.Services.Interfaces
 @using TravelWebApp.Components.Components_Ui
 @inject IReviewService ReviewService
 @inject IUserServiceCrud UserService
 
-<div class="min-vh-100 bg-light">
+<div class="min-vh-100 bg-light pb-5">
     <div class="container py-5">
-        <h1 class="display-5 fw-bold mb-5">Отзывы наших клиентов</h1>
+        <div class="text-center mb-5">
+            <h1 class="display-4 fw-bold text-dark">Отзывы клиентов</h1>
+            <p class="text-muted fs-5">Мы ценим каждое мнение о наших путешествиях</p>
+        </div>
 
         @if (reviews == null)
         {
-            <div class="text-center py-5">
-                <div class="spinner-border text-primary" role="status"></div>
-                <p class="mt-2">Загрузка отзывов...</p>
+            <div class="d-flex flex-column align-items-center justify-content-center py-5">
+                <div class="spinner-border text-primary mb-3" style="width: 3rem; height: 3rem;" role="status"></div>
+                <p class="text-secondary fw-medium">Загружаем честные отзывы...</p>
             </div>
         }
         else
         {
             <div class="row g-4 mb-5">
                 <div class="col-md-4">
-                    <CardReview Count="@reviews.Count" Label="Всего отзывов" />
-                </div>
-                <div class="col-md-4">
-                    <div class="card border rounded-4 h-100 shadow-sm">
+                    <div class="card border-0 shadow-sm rounded-4 h-100 bg-primary text-white">
                         <div class="card-body p-4 text-center">
-                            <div class="d-flex align-items-center justify-content-center gap-2 mb-2">
-                                <p class="fs-1 fw-bold text-primary mb-0">
-                                    @(reviews.Any() ? reviews.Average(r => r.Rating).ToString("0.0") : "0.0")
-                                </p>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="#ffc107">
-                                    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                                </svg>
-                            </div>
-                            <p class="text-muted mb-0">Средний рейтинг</p>
+                            <h3 class="display-5 fw-bold mb-0">@reviews.Count</h3>
+                            <p class="mb-0 opacity-75">Всего мнений</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <CardReview Count="@reviews.Count(r => r.Rating == 5)" Label="Оценки 5/5" />
+                    <div class="card border-0 shadow-sm rounded-4 h-100 bg-white">
+                        <div class="card-body p-4 text-center">
+                            <div class="d-flex align-items-center justify-content-center gap-2 mb-1">
+                                <h3 class="display-5 fw-bold text-dark mb-0">5.0</h3>
+                                <i class="bi bi-star-fill text-warning fs-3"></i>
+                            </div>
+                            <p class="text-muted mb-0">Высшая оценка</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm rounded-4 h-100 bg-dark text-white">
+                        <div class="card-body p-4 text-center">
+                            <h3 class="display-5 fw-bold mb-0">100%</h3>
+                            <p class="mb-0 opacity-75">Довольных гостей</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -207,44 +217,29 @@
                 {
                     @foreach (var review in reviews)
                     {
-                        <div class="col-md-6">
-                            <div class="card border-0 rounded-4 h-100 shadow-sm">
+                        <div class="col-lg-6">
+                            <div class="card border-0 shadow-sm rounded-4 h-100 review-card">
                                 <div class="card-body p-4">
-                                    <div class="d-flex justify-content-between align-items-start mb-3">
-                                        <div>
-                                            <h5 class="card-title fw-bold mb-1">@review.UserName</h5>
-                                            <span class="badge bg-light text-primary border">
-                                                @GetCategoryLabel(review)
-                                            </span>
+                                    <div class="d-flex justify-content-between mb-3">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="avatar-circle bg-soft-primary text-primary fw-bold">
+                                                @(string.IsNullOrEmpty(review.UserName) ? "?" : review.UserName[0].ToString().ToUpper())
+                                            </div>
+                                            <div>
+                                                <h6 class="fw-bold mb-0">@review.UserName</h6>
+                                                <small class="text-muted">@review.Date?.ToString("dd MMMM yyyy")</small>
+                                            </div>
                                         </div>
-                                        <div class="d-flex text-warning">
-                                            @for (int i = 1; i <= 5; i++)
-                                            {
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="@(i <= review.Rating ? "#ffc107" : "#e9ecef")" viewBox="0 0 16 16" class="me-1">
-                                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L10 13.187l-4.389 2.256z" />
-                                                </svg>
-                                            }
+                                        <div class="badge-category">
+                                            @if (review.TourId > 0) { <span class="badge bg-info-subtle text-info rounded-pill">Тур #@review.TourId</span> }
+                                            else if (review.HotelId > 0) { <span class="badge bg-success-subtle text-success rounded-pill">Отель #@review.HotelId</span> }
+                                            else { <span class="badge bg-secondary-subtle text-secondary rounded-pill">Общий</span> }
                                         </div>
                                     </div>
-                                    <p class="card-text text-secondary mb-3">@review.Text</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <small class="text-muted">@review.Date.ToString("dd.MM.yyyy HH:mm")</small>
-
-                                        <small class="text-primary fw-medium">
-                                            @if (review.TourId > 0)
-                                            {
-                                                <span>Тур #@review.TourId</span>
-                                            }
-                                            else if (review.HotelId > 0)
-                                            {
-                                                <span>Отель #@review.HotelId</span>
-                                            }
-                                            else if (review.FlightId > 0)
-                                            {
-                                                <span>Рейс #@review.FlightId</span>
-                                            }
-                                        </small>
-                                    </div>
+                                    
+                                    <p class="card-text text-dark-emphasis mb-0 italic-text">
+                                        "@review.Text"
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -253,7 +248,11 @@
                 else
                 {
                     <div class="col-12 text-center py-5">
-                        <div class="alert alert-info border-0 shadow-sm rounded-4">Пока нет ни одного отзыва.</div>
+                        <div class="card border-dashed p-5 rounded-4 bg-transparent">
+                            <i class="bi bi-chat-left-dots display-1 text-muted mb-3"></i>
+                            <h4 class="text-secondary">Отзывов пока нет</h4>
+                            <p class="text-muted">Станьте первым, кто поделится впечатлениями!</p>
+                        </div>
                     </div>
                 }
             </div>
@@ -261,53 +260,83 @@
     </div>
 </div>
 
+<style>
+    .bg-soft-primary { background-color: #e7f1ff; }
+    .avatar-circle {
+        width: 45px;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: 1.2rem;
+    }
+    .review-card {
+        transition: transform 0.2s ease, shadow 0.2s ease;
+    }
+    .review-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.05) !important;
+    }
+    .italic-text { font-style: italic; line-height: 1.6; }
+    .border-dashed { border: 2px dashed #dee2e6; }
+</style>
+
 @code {
-    // Используем новый класс для списка
-    private List<ReviewDTO>? reviews;
+    private List<AdminReviewModel>? reviews;
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            // Получаем данные. Если сервис возвращает старый Review, мы переложим их в ReviewViewDto
             var rawData = await ReviewService.GetReviewsAsync();
 
             if (rawData != null)
             {
-                reviews = rawData.Select(r => new ReviewDTO
+                reviews = rawData.Select(r => new AdminReviewModel
                 {
                     Id = r.Id,
                     UserId = r.UserId,
                     Text = r.Text,
-                    Rating = r.Rating,
                     TourId = r.TourId,
                     HotelId = r.HotelId,
                     FlightId = r.FlightId,
-                    Date = r.Date // Если API правильно мапится в сервисе
+                    Date = r.Date 
                 }).ToList();
-
-                foreach (var review in reviews)
+                
+                // Загружаем имена пользователей параллельно для скорости
+                var tasks = reviews.Select(async review =>
                 {
                     if (string.IsNullOrWhiteSpace(review.UserName))
                     {
                         var user = await UserService.GetUserByIdAsync(review.UserId);
                         review.UserName = user?.FullName ?? $"Клиент #{review.UserId}";
                     }
-                }
+                });
+
+                await Task.WhenAll(tasks);
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Ошибка: {ex.Message}");
-            reviews = new List<ReviewDTO>();
+            Console.WriteLine($"Ошибка в компоненте отзывов: {ex.Message}");
+            reviews = new List<AdminReviewModel>();
         }
     }
 
-    private string GetCategoryLabel(ReviewDTO review)
+    public class AdminReviewModel
     {
-        if (review.TourId.HasValue && review.TourId > 0) return "Тур";
-        if (review.HotelId.HasValue && review.HotelId > 0) return "Отель";
-        if (review.FlightId.HasValue && review.FlightId > 0) return "Перелет";
-        return "Общий отзыв";
+        public int Id { get; set; }
+        public int UserId { get; set; }
+        public int? TourId { get; set; }
+        public int? FlightId { get; set; }
+        public int? HotelId { get; set; }
+        public string? Text { get; set; }
+        
+        // Ключевой момент: проверь как называется поле в JSON API
+        [JsonPropertyName("createdAt")] 
+        public DateTime? Date { get; set; }
+        
+        public string? UserName { get; set; }
     }
 }

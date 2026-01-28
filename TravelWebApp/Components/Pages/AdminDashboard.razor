@@ -33,7 +33,7 @@
                 <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
                 <circle cx="12" cy="12" r="3"></circle>
             </svg>
-            <h1 class="display-5 fw-bold mb-0">Панель администратора</h1>
+            <h1 class="display-5 fw-bold mb-0">Admin Panel</h1>
         </div>
 
         <!-- Summary Cards -->
@@ -47,7 +47,7 @@
                                 <circle cx="12" cy="12" r="10"></circle>
                             </svg>
                             <div>
-                                <p class="small text-muted mb-0">Туры</p>
+                                <p class="small text-muted mb-0">Tours</p>
                                 <p class="fs-4 fw-bold mb-0">@tours.Count</p>
                             </div>
                         </div>
@@ -62,7 +62,7 @@
                                 <path d="M10 22v-6.57"></path><path d="M12 11h.01"></path><path d="M12 7h.01"></path><path d="M14 15.43V22"></path><path d="M15 16a5 5 0 0 0-6 0"></path><path d="M16 11h.01"></path><path d="M16 7h.01"></path><path d="M8 11h.01"></path><path d="M8 7h.01"></path><rect x="4" y="2" width="16" height="20" rx="2"></rect>
                             </svg>
                             <div>
-                                <p class="small text-muted mb-0">Отели</p>
+                                <p class="small text-muted mb-0">Hotels</p>
                                 <p class="fs-4 fw-bold mb-0">@adminHotels.Count</p>
                             </div>
                         </div>
@@ -77,7 +77,7 @@
                                 <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"></path>
                             </svg>
                             <div>
-                                <p class="small text-muted mb-0">Рейсы</p>
+                                <p class="small text-muted mb-0">Flights</p>
                                 <p class="fs-4 fw-bold mb-0">@adminFlights.Count</p>
                             </div>
                         </div>
@@ -92,7 +92,7 @@
                                 <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                             </svg>
                             <div>
-                                <p class="small text-muted mb-0">Бронирования</p>
+                                <p class="small text-muted mb-0">Bookings</p>
                                 <p class="fs-4 fw-bold mb-0">@adminBookings.Count</p>
                             </div>
                         </div>
@@ -107,7 +107,7 @@
                                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                             </svg>
                             <div>
-                                <p class="small text-muted mb-0">Отзывы</p>
+                                <p class="small text-muted mb-0">Reviews</p>
                                 <p class="fs-4 fw-bold mb-0">@adminReviews.Count</p>
                             </div>
                         </div>
@@ -119,19 +119,19 @@
         <!-- Tabs -->
         <ul class="nav nav-pills nav-fill gap-2 p-1 bg-white rounded-4 border mb-4">
             <li class="nav-item">
-                <button class="nav-link rounded-4 @(activeTab == Tab.Tours ? "active" : "")" @onclick="@(() => SetActiveTab(Tab.Tours))" type="button">Туры</button>
+                <button class="nav-link rounded-4 @(activeTab == Tab.Tours ? "active" : "")" @onclick="@(() => SetActiveTab(Tab.Tours))" type="button">Tours</button>
             </li>
             <li class="nav-item">
-                <button class="nav-link rounded-4 @(activeTab == Tab.Hotels ? "active" : "")" @onclick="@(() => SetActiveTab(Tab.Hotels))" type="button">Отели</button>
+                <button class="nav-link rounded-4 @(activeTab == Tab.Hotels ? "active" : "")" @onclick="@(() => SetActiveTab(Tab.Hotels))" type="button">Hotels</button>
             </li>
             <li class="nav-item">
-                <button class="nav-link rounded-4 @(activeTab == Tab.Flights ? "active" : "")" @onclick="@(() => SetActiveTab(Tab.Flights))" type="button">Рейсы</button>
+                <button class="nav-link rounded-4 @(activeTab == Tab.Flights ? "active" : "")" @onclick="@(() => SetActiveTab(Tab.Flights))" type="button">Flights</button>
             </li>
             <li class="nav-item">
-                <button class="nav-link rounded-4 @(activeTab == Tab.Bookings ? "active" : "")" @onclick="@(() => SetActiveTab(Tab.Bookings))" type="button">Бронирования</button>
+                <button class="nav-link rounded-4 @(activeTab == Tab.Bookings ? "active" : "")" @onclick="@(() => SetActiveTab(Tab.Bookings))" type="button">Bookings</button>
             </li>
             <li class="nav-item">
-                <button class="nav-link rounded-4 @(activeTab == Tab.Reviews ? "active" : "")" @onclick="@(() => SetActiveTab(Tab.Reviews))" type="button">Отзывы</button>
+                <button class="nav-link rounded-4 @(activeTab == Tab.Reviews ? "active" : "")" @onclick="@(() => SetActiveTab(Tab.Reviews))" type="button">Reviews</button>
             </li>
         </ul>
 
@@ -147,7 +147,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M5 12h14"></path><path d="M12 5v14"></path>
                             </svg>
-                            Добавить тур
+                           Create Tour
                         </button>
                     </div>
                     <div class="card-body p-0">
@@ -155,13 +155,13 @@
                             <table class="table table-hover mb-0 align-middle">
                                 <thead class="bg-light">
                                     <tr>
-                                        <th class="px-4 py-3">Название</th>
-                                        <th class="px-4 py-3">Регион</th>
-                                        <th class="px-4 py-3">Цена</th>
-                                        <th class="px-4 py-3">Длительность</th>
+                                        <th class="px-4 py-3">Name</th>
+                                        <th class="px-4 py-3">Region</th>
+                                        <th class="px-4 py-3">Price</th>
+                                        <th class="px-4 py-3">Duration</th>
                                         @* <th class="px-4 py-3">Рейтинг</th>
                                         <th class="px-4 py-3">Статус</th> *@
-                                        <th class="px-4 py-3">Действия</th>
+                                        <th class="px-4 py-3">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -208,27 +208,27 @@
                                     <EditForm Model="@editingTour">
                                         <DataAnnotationsValidator />
                                         <div class="mb-3">
-                                            <label class="form-label">Название</label>
+                                            <label class="form-label">Name</label>
                                             <InputText @bind-Value="editingTour.Title" class="form-control" />
                                             <ValidationMessage For="@(() => editingTour.Title)" />
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label">Описание</label>
+                                            <label class="form-label">Description</label>
                                             <InputTextArea @bind-Value="editingTour.Description" class="form-control" />
                                             <ValidationMessage For="@(() => editingTour.Description)" />
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label">Цена</label>
+                                            <label class="form-label">Price</label>
                                             <InputNumber @bind-Value="editingTour.Price" class="form-control" />
                                             <ValidationMessage For="@(() => editingTour.Price)" />
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label">Регион</label>
+                                            <label class="form-label">Region</label>
                                             <InputText @bind-Value="editingTour.Region" class="form-control" />
                                             <ValidationMessage For="@(() => editingTour.Region)" />
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label">Фото</label>
+                                            <label class="form-label">Photo</label>
                                             <InputFile OnChange="HandleTourImageUpload" class="form-control" accept=".jpg,.jpeg,.png" />
                                             @if (!string.IsNullOrEmpty(editingTour.PhotoUrl))
                                             {
@@ -246,16 +246,16 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6 mb-3">
-                                                <label class="form-label">Широта</label>
+                                                    <label class="form-label">Latitude</label>
                                                 <InputNumber @bind-Value="editingTour.StartLatitude" class="form-control" />
                                             </div>
                                             <div class="col-md-6 mb-3">
-                                                <label class="form-label">Долгота</label>
+                                                    <label class="form-label">Longitude</label>
                                                 <InputNumber @bind-Value="editingTour.StartLongitude" class="form-control" />
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label">Длительность</label>
+                                            <label class="form-label">Duration</label>
                                             <InputNumber @bind-Value="editingTour.Duration" class="form-control" />
                                             <ValidationMessage For="@(() => editingTour.Duration)" />
                                         </div>
@@ -269,8 +269,8 @@
                                             <label class="form-check-label">Доступен</label>
                                         </div> *@
                                         <div class="modal-footer px-0 pb-0">
-                                            <button type="button" class="btn btn-secondary" @onclick="CloseTourModal">Отмена</button>
-                                            <button type="submit" class="btn btn-primary" @onclick="SaveTour">Сохранить</button>
+                                                <button type="button" class="btn btn-secondary" @onclick="CloseTourModal">Cancel</button>
+                                            <button type="submit" class="btn btn-primary" @onclick="SaveTour">Save</button>
                                         </div>
                                     </EditForm>
                                 </div>
@@ -289,7 +289,7 @@
                         <h4 class="mb-0 fw-bold">Управление отелями</h4>
                         <button class="btn btn-primary d-flex align-items-center gap-2" @onclick="OpenAddHotelModal">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
-                            Добавить отель
+                            Сreate Hotel
                         </button>
                     </div>
                     <div class="card-body p-0">
@@ -297,12 +297,12 @@
                             <table class="table table-hover mb-0 align-middle">
                                 <thead class="bg-light">
                                     <tr>
-                                        <th class="px-4 py-3">Название</th>
-                                        <th class="px-4 py-3">Местоположение</th>
-                                        <th class="px-4 py-3">Цена</th>
-                                        <th class="px-4 py-3">Рейтинг</th>
-                                        <th class="px-4 py-3">Статус</th>
-                                        <th class="px-4 py-3">Действия</th>
+                                        <th class="px-4 py-3">Name</th>
+                                            <th class="px-4 py-3">Location</th>
+                                        <th class="px-4 py-3">Price</th>
+                                        @* <th class="px-4 py-3">Рейтинг</th>
+                                        <th class="px-4 py-3">Статус</th> *@
+                                        <th class="px-4 py-3">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -311,12 +311,12 @@
                                             <td class="px-4 py-3 fw-medium">@hotel.Name</td>
                                             <td class="px-4 py-3">@hotel.City</td>
                                             <td class="px-4 py-3">@hotel.Price.ToString("C0")</td>
-                                            <td class="px-4 py-3">@hotel.Rating</td>
+                                            @* <td class="px-4 py-3">@hotel.Rating</td>
                                             <td class="px-4 py-3">
                                                 <span class="badge @(hotel.IsAvailable ? "bg-success" : "bg-danger") bg-opacity-10 text-@(hotel.IsAvailable ? "success" : "danger") rounded-pill px-3">
                                                     @(hotel.IsAvailable ? "Доступен" : "Недоступен")
                                                 </span>
-                                            </td>
+                                            </td> *@
                                             <td class="px-4 py-3">
                                                 <div class="d-flex gap-2">
                                                     <button class="btn btn-outline-secondary btn-sm" @onclick="() => OpenEditHotelModal(hotel)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-pen"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path></svg></button>
@@ -338,39 +338,39 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">@(isNewHotel ? "Добавить отель" : "Редактировать отель")</h5>
+                                <h5 class="modal-title">@(isNewHotel ? "Add Hotel" : "Change Hotel")</h5>
                                 <button type="button" class="btn-close" @onclick="CloseHotelModal"></button>
                             </div>
                             <div class="modal-body">
                                 <EditForm Model="@editingHotel" OnValidSubmit="SaveHotel">
                                     <DataAnnotationsValidator />
                                     <div class="mb-3">
-                                        <label class="form-label">Название</label>
+                                        <label class="form-label">Name</label>
                                         <InputText @bind-Value="editingHotel.Name" class="form-control" />
                                         <ValidationMessage For="@(() => editingHotel.Name)" />
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label">Местоположение</label>
+                                        <label class="form-label">Location</label>
                                         <InputText @bind-Value="editingHotel.City" class="form-control" />
                                         <ValidationMessage For="@(() => editingHotel.City)" />
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label">Цена</label>
+                                        <label class="form-label">Price</label>
                                         <InputNumber @bind-Value="editingHotel.Price" class="form-control" />
                                         <ValidationMessage For="@(() => editingHotel.Price)" />
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label">Рейтинг</label>
+                                        <label class="form-label">Rating</label>
                                         <InputNumber @bind-Value="editingHotel.Rating" class="form-control" step="0.1" />
                                         <ValidationMessage For="@(() => editingHotel.Rating)" />
                                     </div>
                                     <div class="mb-3 form-check">
                                         <InputCheckbox @bind-Value="editingHotel.Status" class="form-check-input" />
-                                        <label class="form-check-label">Доступен</label>
+                                            <label class="form-check-label">Available</label>
                                     </div>
                                     <div class="modal-footer px-0 pb-0">
-                                        <button type="button" class="btn btn-secondary" @onclick="CloseHotelModal">Отмена</button>
-                                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                                        <button type="button" class="btn btn-secondary" @onclick="CloseHotelModal">Cancel</button>
+                                        <button type="submit" class="btn btn-primary">Save</button>
                                     </div>
                                 </EditForm>
                             </div>
@@ -385,10 +385,10 @@
                 <div>
                 <div class="card border rounded-4">
                     <div class="card-header bg-white border-bottom p-4 d-flex justify-content-between align-items-center">
-                        <h4 class="mb-0 fw-bold">Управление рейсами</h4>
+                            <h4 class="mb-0 fw-bold">Flight management</h4>
                         <button class="btn btn-primary d-flex align-items-center gap-2" @onclick="OpenAddFlightModal">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
-                            Добавить рейс
+                            Create Flight
                         </button>
                     </div>
                     <div class="card-body p-0">
@@ -396,12 +396,12 @@
                             <table class="table table-hover mb-0 align-middle">
                                 <thead class="bg-light">
                                     <tr>
-                                        <th class="px-4 py-3">Авиакомпания</th>
-                                        <th class="px-4 py-3">Маршрут</th>
-                                        <th class="px-4 py-3">Дата</th>
-                                        <th class="px-4 py-3">Цена</th>
+                                            <th class="px-4 py-3">Airline</th>
+                                        <th class="px-4 py-3">Route</th>
+                                        <th class="px-4 py-3">Date</th>
+                                        <th class="px-4 py-3">Price</th>
                                         @* <th class="px-4 py-3">Статус</th> *@
-                                        <th class="px-4 py-3">Действия</th>
+                                        <th class="px-4 py-3">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -438,27 +438,27 @@
                                     <EditForm Model="@editingFlight" OnValidSubmit="SaveFlight">
                                         <DataAnnotationsValidator />
                                         <div class="mb-3">
-                                            <label class="form-label">Авиакомпания</label>
+                                            <label class="form-label">Airline</label>
                                             <InputText @bind-Value="editingFlight.airPlaneName" class="form-control" />
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label">Номер рейса</label>
+                                                <label class="form-label">Flight number</label>
                                             <InputNumber @bind-Value="editingFlight.flightNumber" class="form-control" />
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label">Откуда</label>
+                                            <label class="form-label">FromCity</label>
                                             <InputText @bind-Value="editingFlight.fromCity" class="form-control" />
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label">Куда</label>
+                                            <label class="form-label">ToCity</label>
                                             <InputText @bind-Value="editingFlight.toCity" class="form-control" />
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label">Время вылета</label>
+                                                <label class="form-label">Departure time</label>
                                             <InputDate Type="InputDateType.DateTimeLocal" @bind-Value="editingFlight.departureTime" class="form-control" />
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label">Время прилета</label>
+                                                <label class="form-label">Arrival time</label>
                                             <InputDate Type="InputDateType.DateTimeLocal" @bind-Value="editingFlight.arrivalTime" class="form-control" />
                                         </div>
                                         <div class="mb-3">
@@ -466,8 +466,8 @@
                                             <InputNumber @bind-Value="editingFlight.Price" class="form-control" />
                                         </div>
                                         <div class="modal-footer px-0 pb-0">
-                                            <button type="button" class="btn btn-secondary" @onclick="CloseFlightModal">Отмена</button>
-                                            <button type="submit" class="btn btn-primary">Сохранить</button>
+                                            <button type="button" class="btn btn-secondary" @onclick="CloseFlightModal">Cancel</button>
+                                            <button type="submit" class="btn btn-primary">Save</button>
                                         </div>
                                     </EditForm>
                                 </div>
@@ -483,17 +483,17 @@
                 <div>
                 <div class="card border rounded-4">
                     <div class="card-header bg-white border-bottom p-4 d-flex justify-content-between align-items-center">
-                        <h4 class="mb-0 fw-bold">Управление бронированиями</h4>
+                            <h4 class="mb-0 fw-bold">Booking management</h4>
                     </div>
                     <div class="card-body p-0">
                         <div class="table-responsive">
                             <table class="table table-hover mb-0 align-middle">
                                 <thead class="bg-light">
                                     <tr>
-                                        <th class="px-4 py-3">Пользователь</th>
-                                        <th class="px-4 py-3">Объект</th>
-                                        <th class="px-4 py-3">Дата</th>
-                                        <th class="px-4 py-3">Цена</th>
+                                        <th class="px-4 py-3">User</th>
+                                        <th class="px-4 py-3">Object</th>
+                                        <th class="px-4 py-3">Date</th>
+                                        <th class="px-4 py-3">Price</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -532,18 +532,18 @@
                 <div>
                 <div class="card border rounded-4">
                     <div class="card-header bg-white border-bottom p-4 d-flex justify-content-between align-items-center">
-                        <h4 class="mb-0 fw-bold">Управление отзывами</h4>
+                            <h4 class="mb-0 fw-bold">Reviews management</h4>
                     </div>
                     <div class="card-body p-0">
                         <div class="table-responsive">
                             <table class="table table-hover mb-0 align-middle">
                                 <thead class="bg-light">
                                     <tr>
-                                        <th class="px-4 py-3">Пользователь</th>
-                                        <th class="px-4 py-3">Объект</th>
-                                        <th class="px-4 py-3">Комментарий</th>
-                                        <th class="px-4 py-3">Дата</th>
-                                        <th class="px-4 py-3">Действия</th>
+                                        <th class="px-4 py-3">User</th>
+                                        <th class="px-4 py-3">Object</th>
+                                        <th class="px-4 py-3">Comment</th>
+                                        <th class="px-4 py-3">Date</th>
+                                        <th class="px-4 py-3">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>

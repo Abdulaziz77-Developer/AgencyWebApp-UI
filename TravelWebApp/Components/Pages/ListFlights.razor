@@ -21,6 +21,15 @@
         </div>
     </div>
 }
+@if(@Date is  not null )
+{
+     foreach (var item in flights.Where(date => date.arrivalTime == Date || date.departureTime == Date))
+    {
+        <div class="col-lg-6">
+            <CardFlight Flight="item"/>
+        </div>
+    }
+}
 else
 {
     <div class="row mt-4">
@@ -37,10 +46,12 @@ else
 
 
 @code {
-  
-   public List<Flight> flights = new();
 
-   [Parameter] public string SearchTerm { get; set; }
+    public List<Flight> flights = new();
+
+    [Parameter] public string? SearchTerm { get; set; }
+    [Parameter] public DateTime? Date { get; set; }
+
   protected override async Task OnInitializedAsync()
   {
     flights = await FlightService.GetFlightsAsync();

@@ -21,7 +21,7 @@
                 <input type="date" class="form-control" @bind="searchDate">
             </div>
             <div class="col-12">
-                <button type="submit" class="btn btn-dark w-100">Search</button>
+                <button type="submit" class="btn btn-dark w-100" @onclick="HandleSearch">Search</button>
             </div>
         </form>
     </div>
@@ -29,7 +29,7 @@
 
 <ListTours SearchTerm="@searchTerm" />
 <ListHotels SearchTerm="@searchTerm" />
-<ListFlights SearchTerm="@searchTerm" />
+<ListFlights SearchTerm="@searchTerm" Date="searchDate" />
 <Footer />
 
 <style>

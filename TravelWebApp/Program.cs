@@ -68,7 +68,7 @@ builder.Services.AddRazorComponents()
 // 2. КРИТИЧНО ДЛЯ .NET 8: Каскадное состояние аутентификации
 builder.Services.AddCascadingAuthenticationState();
 
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:5188/") });
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://192.168.1.81:5080") });
 
 builder.Services.AddApplicationServices();
 builder.Services.AddHttpClient();
@@ -94,6 +94,7 @@ var app = builder.Build();
 // ... остальной код (Middlewares) ...
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseStaticFiles();
 app.UseAntiforgery(); // Обязательно перед MapRazorComponents
 
 app.MapRazorComponents<App>()

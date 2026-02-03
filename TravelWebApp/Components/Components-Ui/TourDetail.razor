@@ -201,6 +201,7 @@
 </style>
 
 @code {
+    [Parameter] public int id { get; set; }
     [Parameter] public string? Title { get; set; } 
     [Parameter] public string? Location { get; set; } 
     [Parameter] public decimal Price { get; set; }
@@ -215,7 +216,7 @@
 
     public void GoToBookingPage()
     {
-        Navigation.NavigateTo("/booking");
+        Navigation.NavigateTo($"/booking?type=Tour&id={id}");
     }
     private List<(string Day, string Title, string Description)> Itinerary = new()
     {

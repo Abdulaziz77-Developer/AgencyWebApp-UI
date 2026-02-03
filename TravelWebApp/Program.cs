@@ -58,6 +58,8 @@ using Microsoft.AspNetCore.Components.Authorization;
 using TravelWebApp.Auth;
 using TravelWebApp.Components;
 using TravelWebApp.Extensions;
+using TravelWebApp.Services.Implementations;
+using TravelWebApp.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -68,11 +70,13 @@ builder.Services.AddRazorComponents()
 // 2. КРИТИЧНО ДЛЯ .NET 8: Каскадное состояние аутентификации
 builder.Services.AddCascadingAuthenticationState();
 
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://192.168.1.81:5080") });
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://192.168.1.81:5180") });
 
 builder.Services.AddApplicationServices();
 builder.Services.AddHttpClient();
 builder.Services.AddBlazoredLocalStorage();
+
+builder.Services.AddScoped<IOtpService, OtpService>();
 
 // 3. ПРАВИЛЬНАЯ РЕГИСТРАЦИЯ ПРОВАЙДЕРА (Один экземпляр на всех)
 builder.Services.AddScoped<CustomAuthStateProvider>();

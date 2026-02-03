@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Net.Http.Json;
+using System.Threading.Tasks;
 
 namespace TravelWebApp.Auth
 {
@@ -18,13 +19,29 @@ namespace TravelWebApp.Auth
         {
             _localStorage = localStorage;
         }
+        public async Task<string> GetUserEmail()
+        {
+            // Получаем текущее состояние авторизации
+            var authState = await GetAuthenticationStateAsync();
+            var user = authState.User;
 
+            if (user.Identity is not { IsAuthenticated: true })
+            {
+                return string.Empty;
+            }
+
+            // Пробуем найти email в стандартных клаймах или в кастомном поле "email"
+            var emailClaim = user.FindFirst(c => c.Type == ClaimTypes.Email)
+                          ?? user.FindFirst(c => c.Type == "email");
+
+            return emailClaim?.Value ?? string.Empty;
+        }
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             try
             {
                 var token = await _localStorage.GetItemAsync<string>("authToken");
-
+                Console.WriteLine(token);
                 if (string.IsNullOrWhiteSpace(token))
                 {
                     _currentUser = _anonymous;

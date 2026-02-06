@@ -10,6 +10,7 @@
 @using System.ComponentModel.DataAnnotations
 @using TravelWebApp.Components.Layout
 @using Microsoft.AspNetCore.Hosting
+@using TravelWebApp.Auth
 @using System.IO
 @using TravelWebApp.Models
 
@@ -23,6 +24,7 @@
 @inject IWebHostEnvironment Environment
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager Navigation
+@inject IOtpService OtpService 
 <Navbar />
 
 <div class="min-vh-100 bg-light">
@@ -884,10 +886,15 @@
     }
     public async Task ConfirmBooking(int id)
     {
+        var _booking = await BookingService.GetBookingByIdAsync(id);
+        var users = await UserServiceCrud.GetUsersAsync();
+        var user = users.FirstOrDefault(u => u.Id == _booking?.UserId);
+        var userEmail = user?.Email;
         // 1. Получаем объект, который хотим изменить
         var booking = await BookingService.GetBookingByIdAsync(id);
         if (booking == null) return;
 
+        // TODO: здесь мы должен отправить почту клиенту сообщение если админ подтверждаеть 
         booking.Status = true;
 
         // 2. Сохраняем изменения на сервере
@@ -897,6 +904,8 @@
         {
             // 3. Вместо полного запроса из API, обновляем локальный список
             // Допустим, ваш список в таблице называется 'adminBookings'
+            await OtpService.SendConfirmationNotificationAsync(userEmail, id);
+
             var localBooking = adminBookings.FirstOrDefault(b => b.Id == id);
             if (localBooking != null)
             {
@@ -909,6 +918,10 @@
     }
     public async Task DeleteBooking(int id)
     {
+        var _booking = await BookingService.GetBookingByIdAsync(id);
+        var users = await UserServiceCrud.GetUsersAsync();
+        var user = users.FirstOrDefault(u => u.Id == _booking?.UserId);
+        var userEmail = user?.Email;
         // 1. Подтверждение удаления (опционально, но рекомендуется)
         bool confirmed = await JS.InvokeAsync<bool>("confirm", "Вы уверены, что хотите удалить это бронирование?");
         if (!confirmed) return;
@@ -918,6 +931,7 @@
 
         if (success)
         {
+            await OtpService.SendRejectionNotificationAsync(userEmail, id);
             // 3. Находим бронирование в локальном списке и удаляем его
             // Предполагаем, что ваш список называется 'adminBookings'
             var bookingToRemove = adminBookings.FirstOrDefault(b => b.Id == id);

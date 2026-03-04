@@ -1,4 +1,4 @@
-@page "/booking"
+@* @page "/booking"
 @using Microsoft.AspNetCore.Components.Authorization
 @using System.ComponentModel.DataAnnotations
 @using TravelWebApp.Services.Interfaces
@@ -25,7 +25,7 @@
                     <p class="text-muted">Проверьте детали вашего выбора перед подтверждением</p>
                 </div>
 
-                @* --- СЕКЦИЯ С КАРТОЧКОЙ ВЫБРАННОГО ОБЪЕКТА --- *@
+                
                 <div class="shadow-sm border rounded bg-white p-3">
                     @if (bookingType is "Hotel" && hotel != null)
                     {
@@ -216,7 +216,7 @@
         {
             UserId = userId.Value,
             BookingDate = DateTime.Now,
-            Status = true, // Теперь ставим True, так как пройдена проверка Email
+            Status = true, 
             TotalPrice = 0
         };
 
@@ -241,5 +241,254 @@
         public DateTime EndDate { get; set; } = DateTime.Today.AddDays(1);
         [Range(1, 20, ErrorMessage = "Please enter between 1 and 20 guests")]
         public int Guests { get; set; } = 1;
+    }
+} *@
+@page "/booking"
+@using Microsoft.AspNetCore.Components.Authorization
+@using System.ComponentModel.DataAnnotations
+@using TravelWebApp.Services.Interfaces
+@using TravelWebApp.Models
+@using TravelWebApp.Auth
+@using TravelWebApp.Components.Components_Ui
+@inject IBookingService BookingService
+@inject IOtpService OtpService
+@inject IWeatherService WeatherService
+@inject AuthenticationStateProvider AuthStateProvider
+@inject ITourService TourService
+@inject IHotelService HotelService
+@inject IFlightService FlightService
+@inject NavigationManager Navigation
+
+<Navbar />
+
+<div class="min-vh-100 bg-light d-flex align-items-center py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-7">
+
+                <div class="text-center mb-4">
+                    <h2 class="fw-bold">Оформление бронирования</h2>
+                    <p class="text-muted">Проверьте детали вашего выбора перед подтверждением</p>
+                </div>
+
+                @* --- КАРТОЧКА ОБЪЕКТА --- *@
+                <div class="shadow-sm border rounded bg-white p-3 mb-4">
+                    @if (bookingType == "Hotel" && hotel != null)
+                    {
+                        <CardHotel Hotel="@hotel" />
+                    }
+                    else if (bookingType == "Tour" && tour != null)
+                    {
+                        <CardTour Tour="@tour" />
+                    }
+                    else if (bookingType == "Flight" && flight != null)
+                    {
+                        <CardFlight Flight="@flight" />
+                    }
+                    else
+                    {
+                        <div class="text-center py-5">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Загрузка...</span>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                @* --- ВИДЖЕТ ПОГОДЫ --- *@
+                @if ((bookingType == "Hotel" || bookingType == "Tour") && weather != null)
+                {
+                    <div class="card border-0 shadow-sm rounded-4 mb-4" style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white;">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div>
+                                    <h6 class="text-uppercase mb-1 opacity-75" style="letter-spacing: 1px;">Погода в @weather.Name</h6>
+                                    <div class="d-flex align-items-center">
+                                        <h1 class="display-4 fw-bold mb-0">@Math.Round(weather.Main.Temp)°C</h1>
+                                        <div class="ms-3">
+                                            <p class="mb-0 fs-5 text-capitalize">@weather.Weather[0].Description</p>
+                                            <p class="mb-0 opacity-75 small">Влажность: @weather.Main.Humidity%</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    @* Ссылка теперь берется из чистой переменной, никакой путаницы с символом @ *@
+                                    <img src="@WeatherIconUrl"
+                                         alt="weather icon" style="width: 100px; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <div class="mt-4 text-center">
+                    <button class="btn btn-primary btn-lg px-5 shadow rounded-pill"
+                            @onclick="StartOtpProcess"
+                            disabled="@(selectedEntityId == 0 || isProcessing)">
+                        @if (isProcessing)
+                        {
+                            <span class="spinner-border spinner-border-sm me-2"></span>
+                        }
+                        Подтвердить и забронировать
+                    </button>
+
+                    <div class="mt-3">
+                        <button class="btn btn-link text-decoration-none text-muted" @onclick='() => Navigation.NavigateTo("/")'>
+                            Отмена
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@* --- МОДАЛКА OTP --- *@
+@if (showOtpModal)
+{
+    <div class="modal fade show d-block" style="background: rgba(0,0,0,0.6); backdrop-filter: blur(5px);" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title fw-bold">Подтверждение Email</h5>
+                    <button type="button" class="btn-close btn-close-white" @onclick="() => showOtpModal = false"></button>
+                </div>
+                <div class="modal-body text-center p-4">
+                    <div class="mb-3">
+                        <i class="bi bi-shield-lock text-primary" style="font-size: 3rem;"></i>
+                    </div>
+                    <h5>Введите код подтверждения</h5>
+                    <p class="text-muted">Код отправлен на почту <strong>@userEmail</strong></p>
+
+                    <div class="form-group mb-3 px-4">
+                        <input type="text" class="form-control form-control-lg text-center fw-bold"
+                               placeholder="000000" maxlength="6" @bind="enteredOtp"
+                               style="letter-spacing: 8px; font-size: 1.5rem; border: 2px solid #0d6efd;" />
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(otpError))
+                    {
+                        <div class="alert alert-danger py-2 small">@otpError</div>
+                    }
+                </div>
+                <div class="modal-footer justify-content-center border-0 pb-4">
+                    <button class="btn btn-light px-4 me-2" @onclick="() => showOtpModal = false">Отмена</button>
+                    <button class="btn btn-primary px-4" @onclick="VerifyAndFinalize">Подтвердить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<Footer />
+
+@code {
+    private bool showOtpModal = false;
+    private bool isProcessing = false;
+    private string enteredOtp = "";
+    private string otpError = "";
+    private string userEmail = "";
+    private int selectedEntityId = 0;
+    private string bookingType = "Tour";
+
+    private Tour? tour;
+    private Hotel? hotel;
+    private Flight? flight;
+    private WeatherResponse? weather;
+
+    // Генерируем URL иконки в коде, чтобы избежать проблем с Razor синтаксисом
+    private string WeatherIconUrl => (weather != null && weather.Weather.Length > 0)
+        ? $"https://openweathermap.org/img/wn/{weather.Weather[0].Icon}@4x.png"
+        : "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        var uri = Navigation.ToAbsoluteUri(Navigation.Uri);
+        var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
+
+        if (!string.IsNullOrEmpty(query["type"]))
+            bookingType = query["type"]!;
+
+        if (int.TryParse(query["id"], out int id))
+            selectedEntityId = id;
+
+        switch (bookingType)
+        {
+            case "Hotel":
+                hotel = await HotelService.GetHotelByIdAsync(id);
+                if (hotel != null) await LoadWeatherData(hotel.City);
+                break;
+            case "Tour":
+                tour = await TourService.GetTourByIdAsync(id);
+                if (tour != null) await LoadWeatherData(tour.Region);
+                break;
+            case "Flight":
+                flight = await FlightService.GetFlightByIdAsync(id);
+                break;
+        }
+    }
+
+    private async Task LoadWeatherData(string city)
+    {
+        if (!string.IsNullOrEmpty(city))
+        {
+            weather = await WeatherService.GetWeatherByCityAsync(city);
+            StateHasChanged();
+        }
+    }
+
+    private async Task StartOtpProcess()
+    {
+        isProcessing = true;
+        otpError = "";
+        var customAuthProvider = (CustomAuthStateProvider)AuthStateProvider;
+        userEmail = await customAuthProvider.GetUserEmail();
+
+        if (string.IsNullOrEmpty(userEmail))
+        {
+            Navigation.NavigateTo($"/login?ReturnUrl={Uri.EscapeDataString(Navigation.Uri)}");
+            return;
+        }
+
+        var sent = await OtpService.SendOtpAsync(userEmail);
+        if (sent) showOtpModal = true;
+        else otpError = "Ошибка отправки кода.";
+        isProcessing = false;
+    }
+
+    private async Task VerifyAndFinalize()
+    {
+        var isVerified = await OtpService.VerifyOtpAsync(userEmail, enteredOtp);
+        if (isVerified)
+        {
+            await HandleBooking();
+            showOtpModal = false;
+        }
+        else otpError = "Неверный код.";
+    }
+
+    private async Task HandleBooking()
+    {
+        var customAuthProvider = (CustomAuthStateProvider)AuthStateProvider;
+        var userId = customAuthProvider.GetUserId();
+        if (userId == null || selectedEntityId == 0) return;
+
+        var booking = new TravelWebApp.Models.Booking
+        {
+            UserId = userId.Value,
+            BookingDate = DateTime.Now,
+            Status = true,
+            TotalPrice = 0
+        };
+
+        if (bookingType == "Tour") booking.TourId = selectedEntityId;
+        else if (bookingType == "Hotel") booking.HotelId = selectedEntityId;
+        else if (bookingType == "Flight") booking.FlightId = selectedEntityId;
+
+        if (await BookingService.CreateBookingAsync(booking))
+        {
+            Navigation.NavigateTo("/");
+        }
     }
 }

@@ -23,13 +23,13 @@ namespace TravelWebApp.Services.Implementations
         }
         public async Task<bool> SendConfirmationNotificationAsync(string email, int bookingId)
         {
-            var response = await _http.PostAsync($"api/Email/confirm-notification?email={email}&id={bookingId}", null);
+            var response = await _http.PostAsync($"api/Otp/confirm-notification?email={email}&id={bookingId}", null);
             return response.IsSuccessStatusCode;
         }
 
         public async Task<bool> SendRejectionNotificationAsync(string email, int bookingId)
         {
-            var response = await _http.PostAsync($"api/Email/reject-notification?email={email}&id={bookingId}", null);
+            var response = await _http.PostAsync($"api/Otp/reject-notification?email={email}&id={bookingId}", null);
             return response.IsSuccessStatusCode;
         }
     }

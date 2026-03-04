@@ -1,0 +1,27 @@
+# Этап 1: Сборка (SDK 8.0)
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+
+# 1. Копируем файл проекта и восстанавливаем зависимости
+COPY ["TravelWebApp.csproj", "./"]
+RUN dotnet restore "TravelWebApp.csproj"
+
+# 2. Копируем все исходники (включая App.razor)
+COPY . .
+
+# 3. Публикуем приложение
+RUN dotnet publish "TravelWebApp.csproj" -c Release -o /app/publish
+
+# Этап 2: ЗАПУСК (Используем ASP.NET Runtime)
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
+WORKDIR /app
+
+# Копируем результат публикации (там будет TravelWebApp.dll и папка wwwroot со стилями)
+COPY --from=build /app/publish .
+
+# Указываем порты: приложение будет слушать 80-й порт внутри контейнера
+ENV ASPNETCORE_URLS=http://+:80
+EXPOSE 80
+
+# Запускаем серверную часть Blazor
+ENTRYPOINT ["dotnet", "TravelWebApp.dll"]

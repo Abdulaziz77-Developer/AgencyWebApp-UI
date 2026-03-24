@@ -19,21 +19,21 @@
             <div class="col-lg-8">
                 <div class="card border-0 shadow-sm">
                     <div class="card-body p-4 p-md-5">
-                        <h2 class="fw-bold mb-4 text-center">Book Your Trip</h2>
+                        <h2 class="fw-bold mb-4 text-center">Забронируйте ваши путешествие </h2>
 
                         <div class="mb-4">
-                            <label class="form-label fw-bold">Booking Type</label>
+                            <label class="form-label fw-bold">Тип бронирования</label>
                             <select @bind="bookingType" class="form-select form-select-lg">
-                                <option value="Tour">Tour</option>
-                                <option value="Hotel">Hotel</option>
-                                <option value="Flight">Flight</option>
+                                <option value="Tour">Тур</option>
+                                <option value="Hotel">Отель</option>
+                                <option value="Flight">Рейс</option>
                             </select>
                         </div>
 
                         <div class="mb-4">
-                            <label class="form-label fw-bold">Select @bookingType</label>
+                            <label class="form-label fw-bold">Выберите @bookingType</label>
                             <select @bind="selectedEntityId" class="form-select form-select-lg">
-                                <option value="0">-- Choose your @bookingType --</option>
+                                <option value="0">-- Выберите  @bookingType --</option>
                                 @if (bookingType == "Tour")
                                 {
                                     @foreach (var item in tours)
@@ -63,30 +63,30 @@
 
                             <div class="row g-3 mb-3">
                                 <div class="col-md-6">
-                                    <label class="form-label">Check-in / Start Date</label>
+                                    <label class="form-label">Дата заезда / начала</label>
                                     <InputDate @bind-Value="bookingModel.StartDate" class="form-control" />
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label">Check-out / End Date</label>
+                                    <label class="form-label">Дата выезда / окончания</label>
                                     <InputDate @bind-Value="bookingModel.EndDate" class="form-control" />
                                 </div>
                             </div>
 
                             <div class="mb-4">
-                                <label class="form-label">Number of Guests</label>
+                                <label class="form-label">Количество гостей</label>
                                 <InputNumber @bind-Value="bookingModel.Guests" class="form-control" min="1" />
                                 <ValidationMessage For="@(() => bookingModel.Guests)" />
                             </div>
 
                             <button type="submit" class="btn btn-primary w-100 py-2">
-                                Book @bookingType
+                                Забронировать @bookingType
                             </button>
                         </EditForm>
 
                         @if (bookingSubmitted)
                         {
                             <div class="alert alert-success mt-3">
-                                Your @bookingType booking request has been received!
+                                Ваш запрос на бронирование  @bookingType успешно принят!
                             </div>
                         }
                     </div>

@@ -30,15 +30,15 @@
                 </NotAuthorized>
                 <Authorizing>
                     @* Что показывать, пока Blazor проверяет роль *@
-                    <p>Checking access...</p>
+                    <p>Проверка доступа...</p>
                 </Authorizing>
             </AuthorizeRouteView>
             <FocusOnNavigate RouteData="routeData" Selector="h1" />
         </Found>
         <NotFound>
-            <PageTitle>Not found</PageTitle>
+            <PageTitle>Страница не найдена</PageTitle>
             <LayoutView Layout="@typeof(Layout.MainLayout)">
-                <p role="alert">Sorry, there's nothing at this address.</p>
+                <p role="alert">Извините, но по этому адресу ничего нет.</p>
             </LayoutView>
         </NotFound>
     </Router>

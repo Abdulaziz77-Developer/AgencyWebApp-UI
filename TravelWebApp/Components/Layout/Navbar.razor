@@ -1,90 +1,3 @@
-@* @inject NavigationManager Navigation
-@using Microsoft.AspNetCore.Components.Authorization
-
-<nav class="navbar navbar-expand-lg fixed-top bg-white border-bottom">
-    <div class="container-fluid px-5">
-
-        <!-- Brand -->
-        <a class="navbar-brand fw-bold fs-2"
-           href="/">
-            <span class="text-primary">Agency</span>Web
-        </a>
-
-        <!-- Mobile toggle -->
-        <button class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#mainNavbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <!-- Menu -->
-        <div class="collapse navbar-collapse" id="mainNavbar">
-            <ul class="navbar-nav ms-auto align-items-center gap-4 fw-medium">
-
-                <li class="nav-item">
-                    <NavLink href="/" Match="NavLinkMatch.All"
-                             class="nav-link text-black fw-bold"
-                             ActiveClass="active-link">
-                        Home
-                    </NavLink>
-                </li>
-
-                <li class="nav-item">
-                    <NavLink href="/tours" class="nav-link text-black fw-bold">
-                        <i class="bi bi-compass  text-black fw-bold"></i> 
-                        Tours</NavLink>
-                </li>
-
-                <li class="nav-item">
-                    <NavLink href="/hotels" class="nav-link text-black fw-bold">
-                        <i class="bi bi-building  text-black fw-bold"></i> Hotels
-                    </NavLink>
-                </li>
-
-                <li class="nav-item">
-                    <NavLink href="/flights" class="nav-link text-black fw-bold">
-                        <i class="bi bi-airplane me text-black fw-bold"></i>
-                        Flights</NavLink>
-                </li>
-
-                <li class="nav-item">
-                    <NavLink href="/contact" class="nav-link text-black fw-bold">
-                        <i class="bi bi-person-lines-fill text-black fw-bold"></i> 
-                        Contact
-                    </NavLink>
-                </li>
-                <li class="nav-item">
-                    <NavLink href="/reviews" class="nav-link text-black fw-bold">
-                        <i class="bi bi-chat-left-text text-black fw-bold"></i> Reviews</NavLink>
-                </li>
-                <AuthorizeView>
-                    <Authorized>
-                        <li class="nav-item">
-                            <NavLink href="/userdashboard" class="nav-link text-dark fw-bold">
-                                <i class="fa-solid fa-user fs-5 fw-bold"></i>
-                            </NavLink>
-                        </li>
-                    </Authorized>
-                    <NotAuthorized>
-                        <li class="nav-item">
-                            <NavLink href="/login" class="nav-link text-dark">
-                                Login
-                            </NavLink>
-                        </li>
-                        <li class="nav-item">
-                            <NavLink href="/signup"
-                                     class="btn btn-dark rounded-pill px-4 py-2">
-                                Sign Up
-                            </NavLink>
-                        </li>
-                    </NotAuthorized>
-                </AuthorizeView>
-
-            </ul>
-        </div>
-    </div>
-</nav> *@
 @inject NavigationManager Navigation
 @using Microsoft.AspNetCore.Components.Authorization
 @inject TravelWebApp.Auth.AuthService AuthService
@@ -105,44 +18,43 @@
 
                 <li class="nav-item">
                     <NavLink href="/" Match="NavLinkMatch.All" class="nav-link text-black fw-bold" ActiveClass="active-link">
-                        Home
+                        Р“Р»Р°РІРЅР°СЏ
                     </NavLink>
                 </li>
 
                 <li class="nav-item">
                     <NavLink href="/tours" class="nav-link text-black fw-bold">
-                        <i class="bi bi-compass text-black fw-bold"></i> Tours
+                        <i class="bi bi-compass text-black fw-bold"></i> РўСѓСЂС‹
                     </NavLink>
                 </li>
 
                 <li class="nav-item">
                     <NavLink href="/hotels" class="nav-link text-black fw-bold">
-                        <i class="bi bi-building text-black fw-bold"></i> Hotels
+                        <i class="bi bi-building text-black fw-bold"></i> РћС‚РµР»Рё
                     </NavLink>
                 </li>
 
                 <li class="nav-item">
                     <NavLink href="/flights" class="nav-link text-black fw-bold">
-                        <i class="bi bi-airplane me text-black fw-bold"></i> Flights
+                        <i class="bi bi-airplane me text-black fw-bold"></i> РђРІРёР°СЂРµР№СЃС‹
                     </NavLink>
                 </li>
 
                 <li class="nav-item">
                     <NavLink href="/contact" class="nav-link text-black fw-bold">
-                        <i class="bi bi-person-lines-fill text-black fw-bold"></i> Contact
+                        <i class="bi bi-person-lines-fill text-black fw-bold"></i> РљРѕРЅС‚Р°РєС‚С‹
                     </NavLink>
                 </li>
 
                 <li class="nav-item">
                     <NavLink href="/reviews" class="nav-link text-black fw-bold">
-                        <i class="bi bi-chat-left-text text-black fw-bold"></i> Reviews
+                        <i class="bi bi-chat-left-text text-black fw-bold"></i> РћС‚Р·С‹РІС‹
                     </NavLink>
                 </li>
 
                 <AuthorizeView>
                     <Authorized>
                         <li class="nav-item">
-                            @* Если админ — иконка ведет в админку, если юзер — в юзер-панель *@
                             <NavLink href="@(context.User.IsInRole("Admin") ? "/admindashboard" : "/userdashboard")"
                                      class="nav-link text-dark fw-bold">
                                 <i class="fa-solid fa-user fs-5 fw-bold"></i>
@@ -152,12 +64,12 @@
                     <NotAuthorized>
                         <li class="nav-item">
                             <NavLink href="/login" class="nav-link text-dark">
-                                Login
+                                Р’РѕР№С‚Рё
                             </NavLink>
                         </li>
                         <li class="nav-item">
                             <NavLink href="/signup" class="btn btn-dark rounded-pill px-4 py-2">
-                                Sign Up
+                                Р—Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°С‚СЊСЃСЏ
                             </NavLink>
                         </li>
                     </NotAuthorized>

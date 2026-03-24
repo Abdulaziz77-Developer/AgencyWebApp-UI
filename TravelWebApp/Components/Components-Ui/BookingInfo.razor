@@ -6,7 +6,7 @@
         <div class="d-flex align-items-start justify-content-between">
             <div>
                 <h4 class="fs-4 fw-bold mb-1">@Title</h4>
-                <p class="small text-muted mb-0">Booked on: @BookedDate</p>
+                <p class="small text-muted mb-0">Забронировано: @BookedDate</p>
             </div>
             <div class="d-flex align-items-center gap-2 px-3 py-1 rounded-pill @StatusBadgeClass">
                 @if (IsPending)
@@ -33,7 +33,7 @@
                     <path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path>
                 </svg>
                 <div>
-                    <p class="small text-muted mb-0">Trip Date</p>
+                    <p class="small text-muted mb-0">Дата поездки</p>
                     <p class="fw-semibold mb-0">@TripDate</p>
                 </div>
             </div>
@@ -42,7 +42,7 @@
                     <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                 </svg>
                 <div>
-                    <p class="small text-muted mb-0">Guests</p>
+                    <p class="small text-muted mb-0">Количество гостей</p>
                     <p class="fw-semibold mb-0">@Guests</p>
                 </div>
             </div>
@@ -51,7 +51,7 @@
                     <rect width="20" height="14" x="2" y="5" rx="2"></rect><line x1="2" x2="22" y1="10" y2="10"></line>
                 </svg>
                 <div>
-                    <p class="small text-muted mb-0">Total Price</p>
+                    <p class="small text-muted mb-0">Общая стоимость</p>
                     <p class="fw-semibold text-primary mb-0">@Price</p>
                 </div>
             </div>
@@ -63,7 +63,7 @@
         else
         {
             <div class="d-flex gap-2">
-                <button class="btn btn-danger btn-sm px-3" @onclick="CancelBooking">Cancel Booking</button>
+                <button class="btn btn-danger btn-sm px-3" @onclick="CancelBooking">Отменить бронирование</button>
             </div>
         }
     </div>
@@ -71,13 +71,13 @@
 
 @code {
     [Parameter] public int BookingId { get; set; }
-    [Parameter] public string Title { get; set; } = "Luxury Maldives Vacation";
+    [Parameter] public string Title { get; set; } = "Отпуск на Мальдивах";
     [Parameter] public string BookedDate { get; set; } = "2024-12-20";
     [Parameter] public bool Status { get; set; } 
     [Parameter] public string TripDate { get; set; } = "2025-02-14";
     [Parameter] public int Guests { get; set; } = 2;
     [Parameter] public string Price { get; set; } = "$2,500";
-    private string text => Status ? "Confirmed" : "Pending";
+    private string text => Status ? "Подтверждено" : "В ожидании";
     private bool IsPending => Status;
     private string StatusBadgeClass => IsPending ? "bg-success bg-opacity-10 text-success" : "bg-warning bg-opacity-10 text-warning";
 

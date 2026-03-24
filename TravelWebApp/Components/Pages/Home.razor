@@ -6,18 +6,18 @@
 <Navbar />
 
 <div class="hero-container">
-    <h1 class="display-4 mt-4">Explore the World with Us</h1>
-    <p class="fs-4">Discover breathtaking destinations and create unforgettable memories.</p>
+    <h1 class="display-4 mt-4">Добро пожаловать в AgencyWeb</h1>
+    <p class="fs-4">Откройте для себя потрясающие направления и создайте незабываемые воспоминания.</p>
 
     <div class="bg-white p-4 shadow mt-4 text-dark" style="border-radius: 20px;">
         <form class="row g-3">
             <div class="col-md-8">
-                <label class="form-label fw-bold">Where to?</label>
+                <label class="form-label fw-bold">Куда?</label>
                 <input type="text" class="form-control" placeholder="Search places"
                 @bind-value="searchTerm" @bind-value:event="oninput">
             </div>
             <div class="col-md-4">
-                <label class="form-label fw-bold">Date</label>
+                <label class="form-label fw-bold">Дата</label>
                 <input type="date" class="form-control" @bind="searchDate">
             </div>
             <div class="col-12">

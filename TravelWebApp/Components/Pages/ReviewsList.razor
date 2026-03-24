@@ -9,11 +9,11 @@
 
 @if (reviews == null)
 {
-    <p><em>Loading...</em></p>
+    <p><em>Загружаем отзывы...</em></p>
 }
 else if (reviews.Count == 0)
 {
-    <p>No reviews found.</p>
+    <p><em>Отзывов пока нет...</em></p>
 }
 else
 {
@@ -23,10 +23,10 @@ else
             <div class="col-md-4 mb-4">
                 <div class="card h-100">
                     <div class="card-body">
-                        <h5 class="card-title">Review #@review.Id</h5>
-                        <p class="card-text">Rating: 5</p>
+                        <h5 class="card-title">Отзыв #@review.Id</h5>
+                        <p class="card-text">Оценка: 5</p>
                         <p class="card-text">@review.Text</p>
-                        <button class="btn btn-danger" @onclick="() => DeleteReview(review.Id)">Delete</button>
+                        <button class="btn btn-danger" @onclick="() => DeleteReview(review.Id)">Удалить</button>
                     </div>
                 </div>
             </div>

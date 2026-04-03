@@ -20,7 +20,7 @@ builder.Services.AddCascadingAuthenticationState();
 // var backendUrl = Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true" 
 //                  ? "http://backend-container:8080" 
 //                  : "http://localhost:8080";
-var backendUrl = "http://192.168.43.237:5180";
+var backendUrl = "http://192.168.1.81:5180";
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(backendUrl) });
 
 // 3. Настройка заголовков для работы за прокси (Docker)

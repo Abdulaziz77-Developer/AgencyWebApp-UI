@@ -6,15 +6,17 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <base href="/" />
-    <link rel="stylesheet" href="./bootstrap/bootstrap.min.css" />
-    <link rel="stylesheet" href="./app.css" />
+    
+    <link rel="stylesheet" href="bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="app.css" />
+    <link rel="stylesheet" href="Card.css" />
     <link rel="icon" type="image/png" href="favicon.png" />
+    
+    <link rel="stylesheet" href="TravelWebApp.styles.css" />
     
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
-    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link href="./Card.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     
     <HeadOutlet @rendermode="@(new InteractiveServerRenderMode(prerender: false))" />
@@ -24,11 +26,9 @@
     <Routes @rendermode="@(new InteractiveServerRenderMode(prerender: false))" />
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
     <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
     
-    <script src="./JS/leafletBridge.js?v=1.1"></script>
-
+    <script src="JS/leafletBridge.js?v=1.1"></script>
     <script src="_framework/blazor.web.js"></script>
 </body>
 

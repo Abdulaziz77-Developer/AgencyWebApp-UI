@@ -1,15 +1,16 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using TravelWebApp.Infrastrcuture.api.dtos.Tours;
 using TravelWebApp.Models;
 
 namespace TravelWebApp.Services.Interfaces
 {
     public interface ITourService
     {
-        Task<List<Tour>> GetToursAsync();
-        Task<Tour?> GetTourByIdAsync(int id);
-        Task<bool> CreateTourAsync(Tour tour);
-        Task<bool> UpdateTourAsync(int id, Tour tour);
+        Task<List<TourDto>> GetToursAsync();
+        Task<TourDto?> GetTourByIdAsync(int id);
+        Task<bool> CreateTourAsync(TourDto tour);
+        Task<bool> UpdateTourAsync(int id, TourDto tour);
         Task<bool> DeleteTourAsync(int id);
     }
 }

@@ -1,5 +1,5 @@
 @namespace TravelWebApp.Components.Components_Ui
-@using TravelWebApp.Models
+@using AgencyWebApp.Client.Infrastructure.Api.Dtos.Flights
 @inject NavigationManager Navigation
 <style>
     .card-hover-effect {
@@ -62,7 +62,7 @@
 
 @code {
     [Parameter]
-    public Flight? Flight { get; set; }
+    public FlightDto? Flight { get; set; }
     public void GotoBooking()
     {
         Navigation.NavigateTo($"/booking?type=Flight&id={Flight?.id}");

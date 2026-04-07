@@ -1,6 +1,11 @@
 @page "/booking"
+@using AgencyWebApp.Client.Infrastructure.Api.Dtos.Bookings
+@using AgencyWebApp.Client.Infrastructure.Api.Dtos.Flights
 @using Microsoft.AspNetCore.Components.Authorization
 @using System.ComponentModel.DataAnnotations
+@using TravelWebApp.Infrastrcuture.api.dtos.Hotels
+@using TravelWebApp.Infrastrcuture.api.dtos.Tours
+@using TravelWebApp.Infrastrcuture.api.dtos.Weather
 @using TravelWebApp.Services.Interfaces
 @using TravelWebApp.Models
 @using TravelWebApp.Auth
@@ -147,10 +152,10 @@
     private int selectedEntityId = 0;
     private string bookingType = "Tour";
 
-    private Tour? tour;
-    private Hotel? hotel;
-    private Flight? flight;
-    private WeatherResponse? weather;
+    private TourDto? tour;
+    private HotelDto? hotel;
+    private FlightDto? flight;
+    private WeatherResponseDto? weather;
 
     // Генерируем URL иконки в коде, чтобы избежать проблем с Razor синтаксисом
     private string WeatherIconUrl => (weather != null && weather.Weather.Length > 0)
@@ -229,7 +234,7 @@
         var userId = customAuthProvider.GetUserId();
         if (userId == null || selectedEntityId == 0) return;
 
-        var booking = new TravelWebApp.Models.Booking
+        var booking = new BookingDto
         {
             UserId = userId.Value,
             BookingDate = DateTime.Now,

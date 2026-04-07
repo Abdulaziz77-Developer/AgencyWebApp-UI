@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using TravelWebApp.Infrastrcuture.api.dtos.Users;
 using TravelWebApp.Models;
 using TravelWebApp.Services.Interfaces;
 
@@ -16,7 +17,7 @@ namespace TravelWebApp.Services.Implementations
             _httpClient = httpClient;
         }
 
-        public async Task<bool> CreateUserAsync(User User)
+        public async Task<bool> CreateUserAsync(UserDto User)
         {
             // Note: The interface returns Task<User>, but typically POST returns the created entity or we just return the input if successful.
             // Assuming the API returns the created user.
@@ -25,17 +26,17 @@ namespace TravelWebApp.Services.Implementations
                 
         }
 
-        public async Task<List<User>> GetUsersAsync()
+        public async Task<List<UserDto>> GetUsersAsync()
         {
-            return await _httpClient.GetFromJsonAsync<List<User>>("api/Users") ?? new List<User>();
+            return await _httpClient.GetFromJsonAsync<List<UserDto>>("api/Users") ?? new List<UserDto>();
         }
 
-        public async Task<User?> GetUserByIdAsync(int id)
+        public async Task<UserDto?> GetUserByIdAsync(int id)
         {
-            return await _httpClient.GetFromJsonAsync<User>($"api/Users/{id}");
+            return await _httpClient.GetFromJsonAsync<UserDto>($"api/Users/{id}");
         }
 
-        public async Task<bool> UpdateUserAsync(int id, User User)
+        public async Task<bool> UpdateUserAsync(int id, UserDto User)
         {
             var response = await _httpClient.PutAsJsonAsync($"api/Users/{id}", User);
             return response.IsSuccessStatusCode;

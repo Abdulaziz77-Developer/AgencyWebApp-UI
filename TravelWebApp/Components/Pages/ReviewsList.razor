@@ -1,4 +1,5 @@
 @page "/reviews-list"
+@using TravelWebApp.Infrastrcuture.api.dtos.Reviews
 @using TravelWebApp.Models
 @using TravelWebApp.Services.Interfaces
 @using System.Collections.Generic
@@ -35,7 +36,7 @@ else
 }
 
 @code {
-    private List<ReviewDTO>? reviews;
+    private List<ReviewDto>? reviews;
 
     protected override async Task OnInitializedAsync()
     {
@@ -45,7 +46,7 @@ else
         }
         catch
         {
-            reviews = new List<ReviewDTO>();
+            reviews = new List<ReviewDto>();
         }
     }
 

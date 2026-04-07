@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using TravelWebApp.Infrastrcuture.api.dtos.Tours;
 using TravelWebApp.Models;
 using TravelWebApp.Services.Interfaces;
 
@@ -17,26 +18,26 @@ namespace TravelWebApp.Services
         }
         
         // GET: api/tours
-        public async Task<List<Tour>> GetToursAsync()
+        public async Task<List<TourDto>> GetToursAsync()
         {
-            return await _httpClient.GetFromJsonAsync<List<Tour>>("api/tours") ?? new List<Tour>();
+            return await _httpClient.GetFromJsonAsync<List<TourDto>>("api/tours") ?? new List<TourDto>();
         }
 
         // GET: api/tours/{id}
-        public async Task<Tour?> GetTourByIdAsync(int id)
+        public async Task<TourDto?> GetTourByIdAsync(int id)
         {
-            return await _httpClient.GetFromJsonAsync<Tour>($"api/tours/{id}");
+            return await _httpClient.GetFromJsonAsync<TourDto>($"api/tours/{id}");
         }
 
         // POST: api/tours
-        public async Task<bool> CreateTourAsync(Tour tour)
+        public async Task<bool> CreateTourAsync(TourDto tour)
         {
             var response = await _httpClient.PostAsJsonAsync("api/tours", tour);
             return response.IsSuccessStatusCode;
         }
 
         // PUT: api/tours/{id}
-        public async Task<bool> UpdateTourAsync(int id, Tour tour)
+        public async Task<bool> UpdateTourAsync(int id, TourDto tour)
         {
             var response = await _httpClient.PutAsJsonAsync($"api/tours/{id}", tour);
             return response.IsSuccessStatusCode;

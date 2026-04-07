@@ -1,6 +1,10 @@
 @page "/bookingpage"
 @using System.ComponentModel.DataAnnotations
+@using AgencyWebApp.Client.Infrastructure.Api.Dtos.Bookings
+@using AgencyWebApp.Client.Infrastructure.Api.Dtos.Flights
 @using Microsoft.AspNetCore.Components.Authorization
+@using TravelWebApp.Infrastrcuture.api.dtos.Hotels
+@using TravelWebApp.Infrastrcuture.api.dtos.Tours
 @using TravelWebApp.Services.Interfaces
 @using TravelWebApp.Models
 @using Microsoft.AspNetCore.Http
@@ -104,9 +108,9 @@
     private string bookingType = "Tour";
     private int selectedEntityId = 0;
 
-    private List<Tour> tours = new();
-    private List<Hotel> hotels = new();
-    private List<Flight> flights = new();
+    private List<TourDto> tours = new();
+    private List<HotelDto> hotels = new();
+    private List<FlightDto> flights = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -139,7 +143,7 @@
 
         if (selectedEntityId == 0) return;
 
-        TravelWebApp.Models.Booking booking = new TravelWebApp.Models.Booking
+        BookingDto   booking = new BookingDto
         {
                 UserId = userId,
                 BookingDate = DateTime.Now

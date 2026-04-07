@@ -1,5 +1,6 @@
 @page "/tour-details/{Id:int}"
 @using TravelWebApp.Components.Components_Ui
+@using TravelWebApp.Infrastrcuture.api.dtos.Tours
 
 @inject ITourService TourService 
 
@@ -32,7 +33,7 @@ else
 
 @code {
     [Parameter] public int Id { get; set; }
-    private TravelWebApp.Models.Tour? tour;
+    private TourDto? tour;
     private bool isLoading = true;
     protected override async Task OnParametersSetAsync()
     {

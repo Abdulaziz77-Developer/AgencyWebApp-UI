@@ -1,4 +1,5 @@
 @namespace TravelWebApp.Components.Components_Ui
+@using TravelWebApp.Infrastrcuture.api.dtos.Hotels
 @inject NavigationManager Navigation
 @inject IJSRuntime JSRuntime
 
@@ -96,7 +97,7 @@
 }
 
 @code {
-    [Parameter] public Hotel? Hotel { get; set; }
+    [Parameter] public HotelDto? Hotel { get; set; }
     private bool isMapVisible = false;
 
     private async Task OpenMap()

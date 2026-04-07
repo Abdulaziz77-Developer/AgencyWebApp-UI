@@ -1,9 +1,10 @@
-﻿using TravelWebApp.Models;
+﻿using TravelWebApp.Infrastrcuture.api.dtos.Weather;
+using TravelWebApp.Models;
 
 namespace TravelWebApp.Services.Interfaces
 {
     public interface IWeatherService
     {
-        Task<WeatherResponse?> GetWeatherByCityAsync(string city);
+        Task<WeatherResponseDto?> GetWeatherByCityAsync(string city);
     }
 }

@@ -1,3 +1,4 @@
+@using TravelWebApp.Infrastrcuture.api.dtos.Tours
 @inject IJSRuntime JSRuntime
 
 <div class="card h-100 border rounded-4 overflow-hidden shadow-sm card-hover">
@@ -58,7 +59,7 @@
 }
 
 @code {
-    [Parameter] public TravelWebApp.Models.Tour? Tour { get; set; }
+    [Parameter] public TourDto? Tour { get; set; }
     private bool isMapVisible = false;
 
     private async Task OpenMap()

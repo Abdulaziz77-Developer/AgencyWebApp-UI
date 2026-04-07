@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using TravelWebApp.Infrastrcuture.api.dtos.Hotels;
 using TravelWebApp.Models;
 using TravelWebApp.Services.Interfaces;
 
@@ -17,26 +18,26 @@ namespace TravelWebApp.Services
         }
 
         // GET: api/hotels
-        public async Task<List<Hotel>> GetHotelsAsync()
+        public async Task<List<HotelDto>> GetHotelsAsync()
         {
-            return await _httpClient.GetFromJsonAsync<List<Hotel>>("api/hotels") ?? new List<Hotel>();
+            return await _httpClient.GetFromJsonAsync<List<HotelDto>>("api/hotels") ?? new List<HotelDto>();
         }
 
         // GET: api/hotels/{id}
-        public async Task<Hotel?> GetHotelByIdAsync(int id)
+        public async Task<HotelDto?> GetHotelByIdAsync(int id)
         {
-            return await _httpClient.GetFromJsonAsync<Hotel>($"api/hotels/{id}");
+            return await _httpClient.GetFromJsonAsync<HotelDto>($"api/hotels/{id}");
         }
 
         // POST: api/hotels
-        public async Task<bool> CreateHotelAsync(Hotel hotel)
+        public async Task<bool> CreateHotelAsync(HotelDto hotel)
         {
             var response = await _httpClient.PostAsJsonAsync("api/hotels", hotel);
             return response.IsSuccessStatusCode;
         }
 
         // PUT: api/hotels/{id}
-        public async Task<bool> UpdateHotelAsync(int id, Hotel hotel)
+        public async Task<bool> UpdateHotelAsync(int id, HotelDto hotel)
         {
             var response = await _httpClient.PutAsJsonAsync($"api/hotels/{id}", hotel);
             return response.IsSuccessStatusCode;

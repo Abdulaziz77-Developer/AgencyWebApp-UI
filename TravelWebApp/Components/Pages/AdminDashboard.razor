@@ -1,10 +1,16 @@
 @page "/admindashboard"
 @rendermode InteractiveServer
 @attribute [Authorize(Roles = "Admin")]
+@using AgencyWebApp.Client.Infrastructure.Api.Dtos.Bookings
+@using AgencyWebApp.Client.Infrastructure.Api.Dtos.Flights
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.Authorization
 @using TravelWebApp.Components.Components_Ui
 @using System.Linq
+@using TravelWebApp.Infrastrcuture.api.dtos.Hotels
+@using TravelWebApp.Infrastrcuture.api.dtos.Reviews
+@using TravelWebApp.Infrastrcuture.api.dtos.Tours
+@using TravelWebApp.Infrastrcuture.api.dtos.Users
 @using TravelWebApp.Services
 @using TravelWebApp.Services.Interfaces
 @using System.ComponentModel.DataAnnotations
@@ -573,10 +579,10 @@
 </div>
 
 @code {
-    private List<Tour> tours = new();
-    private List<ReviewDTO> adminReviews = new();
+    private List<TourDto> tours = new();
+    private List<ReviewDto> adminReviews = new();
     private List<AdminReviewModel> reviews = new();
-    private List<TravelWebApp.Models.Booking> bookings = new();
+    private List<BookingDto> bookings = new();
     protected override async Task OnInitializedAsync()
     {
         try
@@ -591,16 +597,16 @@
             }
 
             // Загружаем все данные с API
-            tours = await TourService.GetToursAsync() ?? new List<Tour>();
+            tours = await TourService.GetToursAsync() ?? new List<TourDto>();
             Console.WriteLine($"Туры загружены: {tours.Count}");
 
-            adminHotels = await HotelService.GetHotelsAsync() ?? new List<Hotel>();
+            adminHotels = await HotelService.GetHotelsAsync() ?? new List<HotelDto>();
             Console.WriteLine($"Отели загружены: {adminHotels.Count}");
 
-            adminFlights = await FlightService.GetFlightsAsync() ?? new List<Flight>();
+            adminFlights = await FlightService.GetFlightsAsync() ?? new List<FlightDto>();
             Console.WriteLine($"Рейсы загружены: {adminFlights.Count}");
 
-            var users = await UserServiceCrud.GetUsersAsync() ?? new List<User>();
+            var users = await UserServiceCrud.GetUsersAsync() ?? new List<UserDto>();
             Console.WriteLine($"Пользователи загружены: {users.Count}");
 
             // Загружаем бронирования
@@ -617,10 +623,10 @@
                        b.TotalPrice.ToString("C0"),
                 Item = b.TourId.HasValue ? tours.FirstOrDefault(t => t.Id == b.TourId)?.Title ?? "Неизвестный тур" :
                        b.HotelId.HasValue ? adminHotels.FirstOrDefault(h => h.Id == b.HotelId)?.Name ?? "Неизвестный отель" :
-                       b.FlightId.HasValue ? (adminFlights.FirstOrDefault(f => f.id == b.FlightId) is Flight fl ? $"{fl.airPlaneName} ({fl.fromCity} -> {fl.toCity})" : "Неизвестный рейс") :
+                       b.FlightId.HasValue ? (adminFlights.FirstOrDefault(f => f.id == b.FlightId) is FlightDto fl ? $"{fl.airPlaneName} ({fl.fromCity} -> {fl.toCity})" : "Неизвестный рейс") :
                        "Неизвестно"
             }).ToList();
-            adminReviews = await ReviewService.GetReviewsAsync() ?? new List<ReviewDTO>();
+            adminReviews = await ReviewService.GetReviewsAsync() ?? new List<ReviewDto>();
             Console.WriteLine($"Бронирования загружены: {adminBookings.Count}");
 
             // Загружаем отзывы - ИСПРАВЛЕНО: используем CreatedAt вместо Date
@@ -635,7 +641,7 @@
                 UserName = users.FirstOrDefault(u => u.Id == r.UserId)?.FullName ?? "Неизвестный пользователь",
                 Text = tours.FirstOrDefault(t => t.Id == r.TourId)?.Title ??
                        adminHotels.FirstOrDefault(h => h.Id == r.HotelId)?.Name ??
-                       (adminFlights.FirstOrDefault(f => f.id == r.FlightId) is Flight fl ? $"{fl.airPlaneName} ({fl.fromCity} => {fl.toCity})" : null) ??
+                       (adminFlights.FirstOrDefault(f => f.id == r.FlightId) is FlightDto  fl ? $"{fl.airPlaneName} ({fl.fromCity} => {fl.toCity})" : null) ??
                        "Неизвестный объект"
             }).ToList();
             Console.WriteLine($"Отзывы обработаны: {reviews.Count}");
@@ -665,9 +671,9 @@
         StateHasChanged(); // Уведомляем компонент об изменении активной вкладки
     }
 
-    private List<Hotel> adminHotels = new();
+    private List<HotelDto> adminHotels = new();
 
-    private List<Flight> adminFlights = new();
+    private List<FlightDto> adminFlights = new();
 
     private List<AdminBookingModel> adminBookings = new();
 
@@ -675,18 +681,18 @@
 
     private bool showTourModal = false;
     private bool isNewTour = false;
-    private Tour editingTour = new();
+    private TourDto editingTour = new();
 
     private void OpenAddTourModal()
     {
-        editingTour = new Tour();
+        editingTour = new TourDto();
         TourService.CreateTourAsync(editingTour);
         isNewTour = true;
         showTourModal = true;
         StateHasChanged(); // Уведомляем компонент об изменении состояния
     }
 
-    private async Task OpenEditTourModal(Tour tour)
+    private async Task OpenEditTourModal(TourDto tour)
     {
         var fetchedTour = await TourService.GetTourByIdAsync(tour.Id);
         if (fetchedTour != null)
@@ -710,7 +716,7 @@
         }
 
         if (success) {
-            tours = await TourService.GetToursAsync() ?? new List<Tour>();
+            tours = await TourService.GetToursAsync() ?? new List<TourDto>();
             showTourModal = false;
             StateHasChanged(); // Уведомляем компонент об изменении данных
         }
@@ -724,17 +730,17 @@
 
     private bool showHotelModal = false;
     private bool isNewHotel = false;
-    private Hotel editingHotel = new();
+    private HotelDto editingHotel = new();
 
     private void OpenAddHotelModal()
     {
-        editingHotel = new Hotel();
+        editingHotel = new HotelDto();
         isNewHotel = true;
         showHotelModal = true;
         StateHasChanged(); // Уведомляем компонент об изменении состояния
     }
 
-    private async Task OpenEditHotelModal(Hotel hotel)
+    private async Task OpenEditHotelModal(HotelDto hotel)
     {
         var fetchedHotel = await HotelService.GetHotelByIdAsync(hotel.Id);
         if (fetchedHotel != null)
@@ -758,7 +764,7 @@
         }
         if (success)
         {
-            adminHotels = await HotelService.GetHotelsAsync() ?? new List<Hotel>();
+            adminHotels = await HotelService.GetHotelsAsync() ?? new List<HotelDto>();
             showHotelModal = false;
             StateHasChanged(); // Уведомляем компонент об изменении данных
         }
@@ -790,17 +796,17 @@
 
     private bool showFlightModal = false;
     private bool isNewFlight = false;
-    private Flight editingFlight = new();
+    private  FlightDto editingFlight = new();
 
     private void OpenAddFlightModal()
     {
-        editingFlight = new Flight();
+        editingFlight = new FlightDto();
         isNewFlight = true;
         showFlightModal = true;
         StateHasChanged(); // Уведомляем компонент об изменении состояния
     }
 
-    private async Task OpenEditFlightModal(Flight flight)
+    private async Task OpenEditFlightModal(FlightDto flight)
     {
         var fetchedFlight = await FlightService.GetFlightByIdAsync(flight.id);
         if (fetchedFlight != null)
@@ -824,7 +830,7 @@
         }
         if (success)
         {
-            adminFlights = await FlightService.GetFlightsAsync() ?? new List<Flight>();
+            adminFlights = await FlightService.GetFlightsAsync() ?? new List<FlightDto>();
             showFlightModal = false;
             StateHasChanged(); // Уведомляем компонент об изменении данных
         }

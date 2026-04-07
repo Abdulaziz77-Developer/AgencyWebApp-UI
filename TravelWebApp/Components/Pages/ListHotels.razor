@@ -1,5 +1,6 @@
 @page "/hotels"
 @using TravelWebApp.Components.Components_Ui
+@using TravelWebApp.Infrastrcuture.api.dtos.Hotels
 @inject IHotelService HotelService
 
 @if (string.IsNullOrWhiteSpace(SearchTerm))
@@ -39,7 +40,7 @@ else
 
 
 @code {
-    private List<Hotel> hotels = new List<Hotel>();
+    private List<HotelDto> hotels = new List<HotelDto>();
     [Parameter] public string? SearchTerm { get; set; } 
 
 

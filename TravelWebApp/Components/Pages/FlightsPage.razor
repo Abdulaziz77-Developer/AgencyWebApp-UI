@@ -1,4 +1,5 @@
 @page "/flights"
+@using AgencyWebApp.Client.Infrastructure.Api.Dtos.Flights
 @using TravelWebApp.Components.Components_Ui
 @inject IFlightService FlightService 
 <Navbar />
@@ -57,7 +58,7 @@
 </div>
 
 @code {
-    private List<Flight> flights = new();
+    private List<FlightDto> flights = new();
     
     protected override async Task OnInitializedAsync() 
     {

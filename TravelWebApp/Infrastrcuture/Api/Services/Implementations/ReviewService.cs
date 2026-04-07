@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using TravelWebApp.Infrastrcuture.api.dtos.Reviews;
 using TravelWebApp.Models;
 using TravelWebApp.Services.Interfaces;
 
@@ -16,9 +17,9 @@ namespace TravelWebApp.Services
             _httpClient = httpClient;
         }
 
-        public async Task<List<ReviewDTO>> GetReviewsAsync()
+        public async Task<List<ReviewDto>> GetReviewsAsync()
         {
-            return await _httpClient.GetFromJsonAsync<List<ReviewDTO>>("api/Reviews") ?? new List<ReviewDTO>();
+            return await _httpClient.GetFromJsonAsync<List<ReviewDto>>("api/Reviews") ?? new List<ReviewDto>();
         }
 
         public async Task<bool> DeleteReviewAsync(int id)

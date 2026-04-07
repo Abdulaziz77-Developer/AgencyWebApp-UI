@@ -1,3 +1,4 @@
+@using AgencyWebApp.Client.Infrastructure.Api.Dtos.Flights
 @using TravelWebApp.Components.Components_Ui
 @inject IFlightService FlightService
 
@@ -47,7 +48,7 @@ else
 
 @code {
 
-    public List<Flight> flights = new();
+    public List<FlightDto> flights = new();
 
     [Parameter] public string? SearchTerm { get; set; }
     [Parameter] public DateTime? Date { get; set; }

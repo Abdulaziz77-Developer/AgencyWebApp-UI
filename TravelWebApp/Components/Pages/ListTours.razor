@@ -1,6 +1,7 @@
 @page "/tours"
 @inject ITourService TourService
 @using TravelWebApp.Components.Components_Ui
+@using TravelWebApp.Infrastrcuture.api.dtos.Tours
 
 @if (string.IsNullOrWhiteSpace(SearchTerm))
 {
@@ -38,7 +39,7 @@ else
 }
 
 @code {
-    private List<Tour> tours = new List<Tour>();
+    private List<TourDto> tours = new List<TourDto>();
     [Parameter] public string? SearchTerm { get; set; }
     protected override async Task OnInitializedAsync()
     {

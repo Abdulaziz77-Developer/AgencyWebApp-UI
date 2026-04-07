@@ -1,6 +1,6 @@
-﻿using System.Security.Claims;
+using System.Security.Claims;
 
-namespace TravelWebApp.Auth
+namespace TravelWebApp.Infrastrcuture.api.auth
 {
     public class AuthState
     {

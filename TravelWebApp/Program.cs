@@ -1,11 +1,12 @@
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.HttpOverrides; // Добавлено для Docker
-using TravelWebApp.Auth;
+using TravelWebApp.Infrastrcuture.api.auth;
 using TravelWebApp.Components;
 using TravelWebApp.Extensions;
 using TravelWebApp.Services.Implementations;
 using TravelWebApp.Services.Interfaces;
+using TravelWebApp.Infrastrcuture.api.handlers;
 
 var builder = WebApplication.CreateBuilder(args);
 

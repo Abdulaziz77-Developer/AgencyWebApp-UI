@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.Authorization;
 using System.Net.Http.Json;
 
-namespace TravelWebApp.Auth;
+namespace TravelWebApp.Infrastrcuture.api.auth;
 
 public class AuthService
 {

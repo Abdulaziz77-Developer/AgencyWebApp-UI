@@ -1,11 +1,9 @@
-﻿using Blazored.LocalStorage;
+using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Net.Http.Json;
-using System.Threading.Tasks;
 
-namespace TravelWebApp.Auth
+namespace TravelWebApp.Infrastrcuture.api.auth
 {
     public class CustomAuthStateProvider : AuthenticationStateProvider
     {

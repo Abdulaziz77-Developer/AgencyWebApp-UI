@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using AgencyWebApp.Client.Infrastructure.Api.Dtos.Flights;
 using TravelWebApp.Models;
 
-namespace TravelWebApp.Services.Interfaces
+namespace TravelWebApp.Infrastrcuture.api.Services.Interfaces
 {
     public interface IFlightService
     {

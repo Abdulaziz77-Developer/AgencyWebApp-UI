@@ -1,9 +1,9 @@
 ﻿using System.Net.Http;
 using TravelWebApp.Infrastrcuture.api.dtos.Weather;
-using TravelWebApp.Models;
-using TravelWebApp.Services.Interfaces;
+using TravelWebApp.Infrastrcuture.api.Services.Interfaces;
 
-namespace TravelWebApp.Services.Implementations
+
+namespace TravelWebApp.Infrastrcuture.api.Services.Implementations
 {
     public class WeatherService : IWeatherService
     {

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using TravelWebApp.Infrastrcuture.api.dtos.Reviews;
 using TravelWebApp.Models;
 
-namespace TravelWebApp.Services.Interfaces
+namespace TravelWebApp.Infrastrcuture.api.Services.Interfaces
 {
     public interface IReviewService
     {

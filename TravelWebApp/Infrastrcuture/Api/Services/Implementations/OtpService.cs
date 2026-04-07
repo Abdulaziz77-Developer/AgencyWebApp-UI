@@ -1,6 +1,6 @@
-﻿using TravelWebApp.Services.Interfaces;
+﻿using TravelWebApp.Infrastrcuture.api.Services.Interfaces;
 
-namespace TravelWebApp.Services.Implementations
+namespace TravelWebApp.Infrastrcuture.api.Services.Implementations
 {
     public class OtpService : IOtpService
     {

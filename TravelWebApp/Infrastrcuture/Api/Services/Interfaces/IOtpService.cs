@@ -1,4 +1,4 @@
-﻿namespace TravelWebApp.Services.Interfaces
+﻿namespace TravelWebApp.Infrastrcuture.api.Services.Interfaces
 {
     public interface IOtpService
     {

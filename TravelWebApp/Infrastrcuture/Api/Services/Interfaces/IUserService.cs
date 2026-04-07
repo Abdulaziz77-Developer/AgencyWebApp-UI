@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace TravelWebApp.Services.Interfaces
+namespace TravelWebApp.Infrastrcuture.api.Services.Interfaces
 {
     public interface IUserService
     {

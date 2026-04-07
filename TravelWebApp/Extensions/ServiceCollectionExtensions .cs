@@ -1,6 +1,7 @@
+using TravelWebApp.Infrastrcuture.api.Services.Implementations;
+using TravelWebApp.Infrastrcuture.api.Services.Interfaces;
 using TravelWebApp.Services;
-using TravelWebApp.Services.Interfaces;
-using TravelWebApp.Services.Implementations;
+
 
 namespace TravelWebApp.Extensions;
 

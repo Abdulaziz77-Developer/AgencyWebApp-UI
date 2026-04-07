@@ -1,12 +1,8 @@
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Http.Json;
-using System.Threading.Tasks;
 using TravelWebApp.Infrastrcuture.api.dtos.Hotels;
-using TravelWebApp.Models;
-using TravelWebApp.Services.Interfaces;
+using TravelWebApp.Infrastrcuture.api.Services.Interfaces;
 
-namespace TravelWebApp.Services
+
+namespace TravelWebApp.Infrastrcuture.api.Services.Implementations
 {
     public class HotelService : IHotelService
     {

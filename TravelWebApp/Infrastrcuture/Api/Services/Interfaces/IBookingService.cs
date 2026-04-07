@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AgencyWebApp.Client.Infrastructure.Api.Dtos.Bookings;
 
-namespace TravelWebApp.Services.Interfaces
+namespace TravelWebApp.Infrastrcuture.api.Services.Interfaces
 {
     public interface IBookingService
     {

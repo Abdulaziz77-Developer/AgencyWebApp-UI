@@ -1,10 +1,9 @@
-using TravelWebApp.Models;
-using TravelWebApp.Services.Interfaces;
-using TravelWebApp.Auth;
 using Microsoft.AspNetCore.Components.Authorization;
 using AgencyWebApp.Client.Infrastructure.Api.Dtos.Bookings;
+using TravelWebApp.Infrastrcuture.api.Services.Interfaces;
+using TravelWebApp.Infrastrcuture.api.auth;
 
-namespace TravelWebApp.Services
+namespace TravelWebApp.Infrastrcuture.api.Services.Implementations
 {
     public class BookingService : IBookingService
     {

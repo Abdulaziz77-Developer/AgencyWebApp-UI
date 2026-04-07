@@ -1,0 +1,94 @@
+@page "/bookingpage"
+@namespace AgencyWebApp.Client.Features.Booking
+@using System.ComponentModel.DataAnnotations
+@using AgencyWebApp.Client.Infrastructure.Api.Dtos.Bookings
+@using AgencyWebApp.Client.Infrastructure.Api.Dtos.Flights
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Http
+
+<Navbar />
+
+<div class="min-vh-100 bg-light">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4 p-md-5">
+                        <h2 class="fw-bold mb-4 text-center">Забронируйте ваши путешествие </h2>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Тип бронирования</label>
+                            <select @bind="bookingType" class="form-select form-select-lg">
+                                <option value="Tour">Тур</option>
+                                <option value="Hotel">Отель</option>
+                                <option value="Flight">Рейс</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Выберите @bookingType</label>
+                            <select @bind="selectedEntityId" class="form-select form-select-lg">
+                                <option value="0">-- Выберите  @bookingType --</option>
+                                @if (bookingType == "Tour")
+                                {
+                                    @foreach (var item in tours)
+                                    {
+                                        <option value="@item.Id">@item.Title</option>
+                                    }
+                                }
+                                else if (bookingType == "Hotel")
+                                {
+                                    @foreach (var item in hotels)
+                                    {
+                                        <option value="@item.Id">@item.Name</option>
+                                    }
+                                }
+                                else if (bookingType == "Flight")
+                                {
+                                    @foreach (var item in flights)
+                                    {
+                                        <option value="@item.id">@item.fromCity - @item.toCity</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+
+                        <EditForm Model="@bookingModel" OnValidSubmit="HandleBooking">
+                            <DataAnnotationsValidator />
+
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Дата заезда / начала</label>
+                                    <InputDate @bind-Value="bookingModel.StartDate" class="form-control" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Дата выезда / окончания</label>
+                                    <InputDate @bind-Value="bookingModel.EndDate" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label">Количество гостей</label>
+                                <InputNumber @bind-Value="bookingModel.Guests" class="form-control" min="1" />
+                                <ValidationMessage For="@(() => bookingModel.Guests)" />
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100 py-2">
+                                Забронировать @bookingType
+                            </button>
+                        </EditForm>
+
+                        @if (bookingSubmitted)
+                        {
+                            <div class="alert alert-success mt-3">
+                                Ваш запрос на бронирование  @bookingType успешно принят!
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<Footer />

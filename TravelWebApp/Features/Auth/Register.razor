@@ -1,0 +1,114 @@
+@page "/signup"
+<div class="min-vh-100 d-flex align-items-center justify-content-center py-5"
+     style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);">
+    <div class="card border-0 shadow-lg rounded-4 w-100" style="max-width: 450px;">
+        <div class="card-header bg-transparent border-0 pt-5 pb-4 text-center">
+            <div class="d-flex justify-content-center mb-4">
+                <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center text-white fw-bold fs-2"
+                     style="width: 64px; height: 64px;">
+                    A
+                </div>
+            </div>
+            <h2 class="fw-bold mb-1">Создайте аккаунт</h2>
+            <p class="text-muted mb-0">Присоединяйтесь к нам и начните свое путешествие</p>
+        </div>
+
+        <div class="card-body px-5 pb-5">
+            <form @onsubmit:preventDefault>
+
+                @if (errorMessage != null)
+                {
+                    <div class="alert alert-danger small mb-3">
+                        @errorMessage
+                    </div>
+                }
+
+                @if (successMessage != null)
+                {
+                    <div class="alert alert-success small mb-3">
+                        @successMessage
+                    </div>
+                }
+
+                <div class="row g-3 mb-3">
+                    <div class="col-6">
+                        <label class="form-label small fw-bold">Имя</label>
+                        <input type="text"
+                               class="form-control"
+                               placeholder="Джон"
+                               @bind="firstName"
+                               required />
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label small fw-bold">Фамилия</label>
+                        <input type="text"
+                               class="form-control"
+                               placeholder="Doe"
+                               @bind="lastName"
+                               required />
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Электронная почта</label>
+                    <input type="email"
+                           class="form-control"
+                           placeholder="name@example.com"
+                           @bind="email"
+                           required />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Номер телефона</label>
+                    <input type="tel"
+                           class="form-control"
+                           placeholder="+1 (555) 000-0000"
+                           @bind="phone"
+                           required />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Пароль</label>
+                    <input type="password"
+                           class="form-control"
+                           placeholder="Create a password"
+                           @bind="password"
+                           required />
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label small fw-bold">Подтвердить пароль</label>
+                    <input type="password"
+                           class="form-control"
+                           placeholder="Confirm your password"
+                           @bind="confirmPassword"
+                           required />
+                </div>
+
+                <button type="button"
+                        class="btn btn-primary w-100 py-2 mb-4"
+                        @onclick="RegisterUser"
+                        disabled="@isLoading">
+                    @(isLoading ? "Creating account..." : "Create Account")
+                </button>
+
+                <div class="text-center small text-muted mb-3">
+                    Уже есть аккаунт?
+                    <a href="/login" class="text-primary text-decoration-none fw-bold">
+                        Войти
+                    </a>
+                </div>
+
+                <div class="text-center">
+                    <a href="/" class="text-muted text-decoration-none small">
+                        ← Вернуться на главную страницу
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@code {
+   
+}

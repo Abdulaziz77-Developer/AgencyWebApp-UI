@@ -1,0 +1,39 @@
+@page "/tours"
+@inject ITourService TourService
+@using TravelWebApp.Shared.Components
+@using TravelWebApp.Infrastrcuture.api.dtos.Tours
+
+@if (string.IsNullOrWhiteSpace(SearchTerm))
+{
+    <div class="container py-5">
+        <div class="row mb-5">
+            <div class="col-12 text-center">
+                <h2 class="display-6 fw-bold">Популярные туры</h2>
+                <p class="text-muted">Откройте для себя наши любимые направления</p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            @foreach (var tour in tours)
+            {
+                <div class="col-md-4">
+                    <CardTour Tour="@tour" />
+                </div>
+            }
+        </div>
+    </div>
+}
+
+else
+{
+    <div class="row mt-4">
+    @foreach (var tour in tours.Where(t => string.IsNullOrEmpty(SearchTerm)
+            || t.Title.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)
+            || t.Region.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)))
+    {
+        <div class="col-md-4">
+            <CardTour Tour="tour" />
+        </div>
+    }
+</div>
+}

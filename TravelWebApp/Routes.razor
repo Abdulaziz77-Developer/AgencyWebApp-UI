@@ -1,0 +1,36 @@
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@using TravelWebApp.Shared.Layout
+@using TravelWebApp.Components.Pages
+<CascadingAuthenticationState>
+    <Router AppAssembly="typeof(Program).Assembly">
+        <Found Context="routeData">
+            <AuthorizeRouteView RouteData="routeData" DefaultLayout="typeof(MainLayout)">
+                <NotAuthorized>
+                    @if (context.User.Identity?.IsAuthenticated == true)
+                    {
+                        @* Если пользователь вошел, но у него нет роли Admin *@
+                        <div class="container mt-5">
+                            <div class="alert alert-danger">У вас нет прав для просмотра этой страницы.</div>
+                        </div>
+                    }
+                    else
+                    {
+                        @* Если пользователь вообще не вошел, отправляем на логин *@
+                        <RedirectToLogin />
+                    }
+                </NotAuthorized>
+                <Authorizing>
+                    @* Что показывать, пока Blazor проверяет роль *@
+                    <p>Проверка доступа...</p>
+                </Authorizing>
+            </AuthorizeRouteView>
+            <FocusOnNavigate RouteData="routeData" Selector="h1" />
+        </Found>
+        <NotFound>
+            <PageTitle>Страница не найдена</PageTitle>
+            <LayoutView Layout="@typeof(MainLayout)">
+                <p role="alert">Извините, но по этому адресу ничего нет.</p>
+            </LayoutView>
+        </NotFound>
+    </Router>
+</CascadingAuthenticationState>

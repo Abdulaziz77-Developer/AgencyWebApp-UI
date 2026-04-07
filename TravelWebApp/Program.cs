@@ -7,6 +7,7 @@ using TravelWebApp.Extensions;
 using TravelWebApp.Infrastrcuture.api.handlers;
 using TravelWebApp.Infrastrcuture.api.Services.Interfaces;
 using TravelWebApp.Infrastrcuture.api.Services.Implementations;
+using TravelWebApp;
 
 var builder = WebApplication.CreateBuilder(args);
 

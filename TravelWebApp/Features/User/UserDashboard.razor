@@ -1,0 +1,83 @@
+@page "/userdashboard"
+@namespace AgencyWebApp.Client.Features.User
+@using Microsoft.AspNetCore.Authorization
+@using TravelWebApp.Shared.Layout
+@using TravelWebApp.Shared.Components
+@using TravelWebApp.Components.Pages
+@attribute [Authorize(Roles = "User")]
+
+
+
+
+<Navbar />
+
+<div class="min-vh-100 bg-light">
+    <div class="container py-5">
+
+        <!-- Верхняя строка: заголовок слева, Logout справа -->
+        <div class="d-flex justify-content-between align-items-center mb-5">
+            <h1 class="display-5 fw-bold mb-0">Мои бронирования</h1>
+
+            <!-- Кнопка Logout справа -->
+            <button class="btn btn-outline-danger"  @onclick="Logout">
+                🚪 Logout 
+            </button>
+        </div>
+
+        <!-- Список бронирований -->
+        @if (isLoading)
+        {
+            <p><em>Загрузка бронирований...</em></p>
+        }
+        else if (!userBookings.Any())
+        {
+            <p><em>У вас еще нет бронирований.</em></p>
+        }
+        else
+        {
+            <div class="d-flex flex-column gap-4">
+                @foreach (var booking in userBookings)
+                {
+                    <BookingInfo BookingId="@booking.Id"
+                                 Title="@booking.Title"
+                                 BookedDate="@booking.BookedDate"
+                                 Status="@booking.Status"
+                                 TripDate="@booking.TripDate"
+                                 Guests="@booking.Guests"
+                                 Price="@booking.Price.ToString("C")" />
+                }
+            </div>
+        }
+
+    </div>
+</div>
+
+    @* <div class="min-vh-100 bg-light">
+        <div class="container py-5">
+            <h1 class="display-5 fw-bold mb-5">Мои бронирования</h1>
+            @if (isLoading)
+            {
+                <p><em>Загрузка бронирований...</em></p>
+            }
+            else if (!userBookings.Any())
+            {
+                <p><em>У вас еще нет бронирований.</em></p>
+            }
+            else
+            {
+                <div class="d-flex flex-column gap-4">
+                    @foreach (var booking in userBookings)
+                    {
+                        <BookingInfo Title="@booking.Title"
+                                     BookedDate="@booking.BookedDate"
+                                     Status="@booking.Status"
+                                     TripDate="@booking.TripDate"
+                                     Guests="@booking.Guests"
+                                     Price="@booking.Price" />
+                    }
+                </div>
+            }
+        </div>
+    </div> *@
+    <Footer/>
+

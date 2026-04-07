@@ -1,0 +1,31 @@
+@page "/tour-details/{Id:int}"
+
+@inject ITourService TourService 
+
+<PageTitle>Детали тура</PageTitle>
+
+@if (isLoading)
+{
+    <div class="container py-5 text-center">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Загрузка ...</span>
+        </div>
+    </div>
+}
+else if (tour != null)
+{
+    <TourDetail id="@tour.Id"
+                Title="@tour.Title" 
+                Location="@tour.Region" 
+                Price="@tour.Price" 
+                ImageUrl="@tour.PhotoUrl" 
+                Description="@tour.Description" />
+}
+else
+{
+    <div class="container py-5 text-center">
+        <h2>Тур не найден</h2>
+        <a href="/" class="btn btn-primary mt-3">Назад к главной странице</a>
+    </div>
+}
+

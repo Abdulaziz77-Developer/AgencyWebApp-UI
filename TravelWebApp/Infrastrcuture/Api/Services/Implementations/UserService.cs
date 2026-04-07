@@ -1,6 +1,8 @@
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using TravelWebApp.Infrastrcuture.api.dtos.Users;
 using TravelWebApp.Infrastrcuture.api.Services.Interfaces;
 
 
@@ -14,6 +16,8 @@ namespace TravelWebApp.Infrastrcuture.api.Services.Implementations
         {
             _httpClient = httpClient;
         }
+
+    
 
         public async Task<string?> LoginAsync(string email, string password)
         {

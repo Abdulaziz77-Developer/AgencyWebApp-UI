@@ -2,7 +2,6 @@ using TravelWebApp.Infrastrcuture.api.Services.Implementations;
 using TravelWebApp.Infrastrcuture.api.Services.Interfaces;
 using TravelWebApp.Services;
 
-
 namespace TravelWebApp.Extensions;
 
 public static class ServiceCollectionExtensions

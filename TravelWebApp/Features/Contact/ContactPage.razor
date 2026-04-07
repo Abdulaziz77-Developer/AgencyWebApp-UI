@@ -1,0 +1,178 @@
+
+@page "/contact"
+@using TravelWebApp.Shared.Components
+
+<Navbar />
+
+<div class="min-vh-100 bg-light">
+    <!-- Hero Section -->
+    <section class="text-white py-5" style="background: linear-gradient(to right, #2563eb, #1e40af);">
+        <div class="container py-4">
+            <div class="col-lg-8">
+                <h1 class="display-4 fw-bold mb-3">Связаться с нами</h1>
+                <p class="lead text-white-50 mb-0">Есть вопросы? Мы здесь, чтобы помочь вам спланировать идеальное путешествие.</p>
+            </div>
+        </div>
+    </section>
+
+   <section class="py-5">       
+    <div class="container">
+           <div class="row g-4">
+               <!-- Left Column: Contact Info -->
+                             <div class="col-lg-4">
+                 <div class="d-flex flex-column gap-4">
+                     <!-- Phone Card -->
+                     <div class="card border rounded-4 shadow-sm">
+                         <div class="card-body p-4">  <div class="d-flex align-items-start gap-3">
+                                 <div class="bg-primary bg-opacity-10 p-3 rounded-3 text-primary d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone">
+                                        <path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"></path>                                     </svg>
+                                    </div>
+                                   <div>
+                                       <h5 class="fw-semibold mb-1">Телефон</h5>
+                                       <p class="text-muted mb-0">+1 (555) 123-4567</p>
+                                       <p class="text-muted mb-0">Пн-Пт: 9:00 - 18:00</p>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                       <!-- Email Card -->
+                       <div class="card border rounded-4 shadow-sm">
+                           <div class="card-body p-4">
+                               <div class="d-flex align-items-start gap-3">
+                                   <div class="bg-primary bg-opacity-10 p-3 rounded-3 text-primary d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+                                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail">
+                                           <path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path>
+                                           <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                                       </svg>
+                                   </div>
+                                   <div>
+                                       <h5 class="fw-semibold mb-1">Электронная почта</h5>
+                                       <p class="text-muted mb-0">info@agencyweb.com</p> <p class="text-muted mb-0">support@agencyweb.com</p>
+                                   </div>
+                              </div>
+                          </div>
+                      </div>
+                      <!-- Office Card -->
+                      <div class="card border rounded-4 shadow-sm">
+                          <div class="card-body p-4">
+                              <div class="d-flex align-items-start gap-3">
+                                  <div class="bg-primary bg-opacity-10 p-3 rounded-3 text-primary d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin">
+                                          <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path>
+                                          <circle cx="12" cy="10" r="3"></circle>
+                                      </svg>
+                                  </div>
+                                  <div>
+                                      <h5 class="fw-semibold mb-1">Адрес офиса</h5>
+                                      <p class="text-muted mb-0">123 Travel Улица</p>
+                                      <p class="text-muted mb-0">Нью-Йорк, NY 10001</p>
+                                      <p class="text-muted mb-0">Соединенные Штаты</p>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                     <!-- Emergency Support Card -->
+                     <div class="card border rounded-4 bg-primary text-white shadow-sm">
+                         <div class="card-body p-4">
+                             <h5 class="fw-semibold mb-2">Экстренная поддержка</h5>
+                             <p class="text-white-50 mb-4">24/7 экстренная помощь для активных бронирований</p>
+                             <button class="btn btn-light w-100 text-primary fw-medium d-flex align-items-center justify-content-center gap-2">
+                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone">
+                                     <path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"></path>
+                                 </svg>
+                                    Позвоните сейчас
+                             </button>
+                            </div>
+                    </div>
+                   </div>
+               </div>
+                <!-- Right Column: Form & FAQ -->
+               <div class="col-lg-8">
+                   <!-- Contact Form -->
+                   <div class="card border rounded-4 shadow-sm mb-4">
+                       <div class="card-header bg-white border-bottom-0 pt-4 px-4">
+                           <h2 class="h3 fw-bold mb-1">Напишите нам</h2>
+                           <p class="text-muted mb-0">Заполните форму ниже, и мы свяжемся с вами в течение 24 часов.</p>
+                       </div>
+                       <div class="card-body p-4">
+                           <form>
+                               <div class="row g-3">
+                                   <div class="col-md-6">
+                                       <label for="firstName" class="form-label fw-medium small">Имя</label>
+                                       <input type="text" class="form-control" id="firstName" placeholder="Джон" required>
+                                   </div>
+                                   <div class="col-md-6">
+                                       <label for="lastName" class="form-label fw-medium small">Фамилия</label>
+                                       <input type="text" class="form-control" id="lastName" placeholder="Доу" required>
+                                   </div>
+                                   <div class="col-md-6">
+                                       <label for="email" class="form-label fw-medium small">Электронная почта</label>
+                                       <input type="email" class="form-control" id="email" placeholder="john@example.com" required>
+                                   </div>
+                                   <div class="col-md-6">
+                                       <label for="phone" class="form-label fw-medium small">Номер телефона</label>
+                                       <input type="tel" class="form-control" id="phone" placeholder="+1 (555) 000-0000">
+                                   </div>
+                                   <div class="col-12">
+                                       <label for="subject" class="form-label fw-medium small">Тема</label>
+                                       <input type="text" class="form-control" id="subject" placeholder="Как мы можем вам помочь?" required>
+                                   </div>
+                                   <div class="col-12">
+                                       <label for="message" class="form-label fw-medium small">Сообщение</label>
+                                       <textarea class="form-control" id="message" rows="5" placeholder="Расскажите нам больше о вашем запросе..." required></textarea>
+                                   </div>
+                                   <div class="col-12">
+                                       <div class="form-check">
+                                           <input class="form-check-input" type="checkbox" id="consent" required>
+                                           <label class="form-check-label text-muted small" for="consent">
+                                               Я согласен получать коммуникации от AgencyWeb относительно моего запроса
+                                           </label>
+                                       </div>
+                                   </div>
+                                   <div class="col-12">
+                                       <button type="submit" class="btn btn-primary w-100 d-flex align-items-center justify-content-center gap-2">
+                                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send">
+                                               <path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"></path>
+                                               <path d="m21.854 2.147-10.94 10.939"></path>                                          </svg>
+                                             Отправить сообщение
+                                       </button>
+                                   </div>
+                               </div>
+                           </form>
+                       </div>
+                    </div>
+
+                    <!-- FAQ Section -->
+                    <div class="card border rounded-4 shadow-sm">
+                        <div class="card-header bg-white border-bottom-0 pt-4 px-4">
+                            <h3 class="h5 fw-bold mb-0">Часто задаваемые вопросы</h3>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="d-flex flex-column gap-4">
+                                <div>
+                                    <h6 class="fw-bold mb-1">Какие у вас рабочие часы?</h6>
+                                    <p class="text-muted mb-0">Наш офис открыт с понедельника по пятницу с 9:00 до 18:00 по восточному времени.</p>
+                                </div>
+                                <div>
+                                    <h6 class="fw-bold mb-1">Как долго вы отвечаете на запросы?</h6>
+                                    <p class="text-muted mb-0">Мы обычно отвечаем на все запросы в течение 24 часов в рабочие дни.</p>
+                                </div>
+                                <div>
+                                    <h6 class="fw-bold mb-1">Могу ли я прийти к вам в офис?</h6>
+                                    <p class="text-muted mb-0">Да! Мы приветствуем посетителей нашего офиса. Пожалуйста, позвоните заранее, чтобы записаться на консультацию с одним из наших туристических консультантов.</p>
+                                </div>
+                            </div>
+                        </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+    </section>
+</div>
+
+
+<!--
+[PROMPT_SUGGESTION]Create a TourDetails.razor page to display full information for a single tour when clicked.[/PROMPT_SUGGESTION]
+[PROMPT_SUGGESTION]Add a "Book Now" modal to the TourDetails page.[/PROMPT_SUGGESTION]
+-->

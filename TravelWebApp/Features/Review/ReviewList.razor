@@ -1,0 +1,118 @@
+@page "/reviews"
+
+<div class="min-vh-100 bg-light pb-5">
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <h1 class="display-4 fw-bold text-dark">Отзывы клиентов</h1>
+            <p class="text-muted fs-5">Мы ценим каждое мнение о наших путешествиях</p>
+        </div>
+
+        @if (reviews == null)
+        {
+            <div class="d-flex flex-column align-items-center justify-content-center py-5">
+                <div class="spinner-border text-primary mb-3" style="width: 3rem; height: 3rem;" role="status"></div>
+                <p class="text-secondary fw-medium">Загружаем честные отзывы...</p>
+            </div>
+        }
+        else
+        {
+            <div class="row g-4 mb-5">
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm rounded-4 h-100 bg-primary text-white">
+                        <div class="card-body p-4 text-center">
+                            <h3 class="display-5 fw-bold mb-0">@reviews.Count</h3>
+                            <p class="mb-0 opacity-75">Всего мнений</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm rounded-4 h-100 bg-white">
+                        <div class="card-body p-4 text-center">
+                            <div class="d-flex align-items-center justify-content-center gap-2 mb-1">
+                                <h3 class="display-5 fw-bold text-dark mb-0">5.0</h3>
+                                <i class="bi bi-star-fill text-warning fs-3"></i>
+                            </div>
+                            <p class="text-muted mb-0">Высшая оценка</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm rounded-4 h-100 bg-dark text-white">
+                        <div class="card-body p-4 text-center">
+                            <h3 class="display-5 fw-bold mb-0">100%</h3>
+                            <p class="mb-0 opacity-75">Довольных гостей</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                @if (reviews.Any())
+                {
+                    @foreach (var review in reviews)
+                    {
+                        <div class="col-lg-6">
+                            <div class="card border-0 shadow-sm rounded-4 h-100 review-card">
+                                <div class="card-body p-4">
+                                    <div class="d-flex justify-content-between mb-3">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="avatar-circle bg-soft-primary text-primary fw-bold">
+                                                @(string.IsNullOrEmpty(review.UserName) ? "?" : review.UserName[0].ToString().ToUpper())
+                                            </div>
+                                            <div>
+                                                <h6 class="fw-bold mb-0">@review.UserName</h6>
+                                                <small class="text-muted">@review.Date?.ToString("dd MMMM yyyy")</small>
+                                            </div>
+                                        </div>
+                                        <div class="badge-category">
+                                            @if (review.TourId > 0) { <span class="badge bg-info-subtle text-info rounded-pill">Тур #@review.TourId</span> }
+                                            else if (review.HotelId > 0) { <span class="badge bg-success-subtle text-success rounded-pill">Отель #@review.HotelId</span> }
+                                            else { <span class="badge bg-secondary-subtle text-secondary rounded-pill">Общий</span> }
+                                        </div>
+                                    </div>
+                                    
+                                    <p class="card-text text-dark-emphasis mb-0 italic-text">
+                                        "@review.Text"
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="col-12 text-center py-5">
+                        <div class="card border-dashed p-5 rounded-4 bg-transparent">
+                            <i class="bi bi-chat-left-dots display-1 text-muted mb-3"></i>
+                            <h4 class="text-secondary">Отзывов пока нет</h4>
+                            <p class="text-muted">Станьте первым, кто поделится впечатлениями!</p>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    .bg-soft-primary { background-color: #e7f1ff; }
+    .avatar-circle {
+        width: 45px;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: 1.2rem;
+    }
+    .review-card {
+        transition: transform 0.2s ease, shadow 0.2s ease;
+    }
+    .review-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.05) !important;
+    }
+    .italic-text { font-style: italic; line-height: 1.6; }
+    .border-dashed { border: 2px dashed #dee2e6; }
+</style>
+

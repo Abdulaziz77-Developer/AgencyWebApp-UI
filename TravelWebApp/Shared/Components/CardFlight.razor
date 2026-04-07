@@ -1,0 +1,70 @@
+@namespace TravelWebApp.Shared.Components
+@using AgencyWebApp.Client.Infrastructure.Api.Dtos.Flights
+@inject NavigationManager Navigation
+<style>
+    .card-hover-effect {
+        transition: box-shadow 0.3s ease, transform 0.3s ease;
+        cursor: pointer;
+    }
+
+    .card-hover-effect:hover {
+        box-shadow: 0 1rem 3rem rgba(0,0,0,.175) !important;
+    }
+</style>
+
+<div class="card h-100 border rounded-4 overflow-hidden shadow-sm card-hover-effect">
+    <div class="card-body p-4">
+
+        <!-- Plane name -->
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <span class="badge border text-dark bg-transparent fw-medium">
+                @Flight?.airPlaneName
+            </span>
+        </div>
+
+        <!-- Time -->
+        <div class="d-flex align-items-center justify-content-between mb-3">
+            <div class="small text-muted">@Flight?.departureTime</div>
+            <div class="small text-muted text-end">@Flight?.arrivalTime</div>
+        </div>
+
+        <!-- LINE WITH FROM / TO -->
+        <div class="position-relative my-4">
+            <div class="border-top"></div>
+
+            <div class="d-flex justify-content-between position-absolute top-0 start-0 w-100 translate-middle-y">
+                <span class="bg-white px-2 small fw-medium text-muted">
+                    @Flight?.fromCity
+                </span>
+
+                <span class="bg-white px-2 small fw-medium text-muted">
+                    @Flight?.toCity
+                </span>
+            </div>
+        </div>
+
+        <!-- Price -->
+        <div class="d-flex align-items-center justify-content-between pt-3">
+            <span class="fs-4 fw-bold text-primary">
+                $@Flight?.Price
+            </span>
+        </div>
+
+    </div>
+
+    <!-- Button -->
+    <div class="card-footer bg-white border-top-0 p-4 pt-0">
+        <button class="btn btn-primary w-100" @onclick="GotoBooking">
+            Выбрать рейс
+        </button>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public FlightDto? Flight { get; set; }
+    public void GotoBooking()
+    {
+        Navigation.NavigateTo($"/booking?type=Flight&id={Flight?.id}");
+    }
+}

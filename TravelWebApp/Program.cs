@@ -1,30 +1,27 @@
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.HttpOverrides; // Добавлено для Docker
+using Microsoft.AspNetCore.HttpOverrides; 
 using TravelWebApp.Infrastrcuture.api.auth;
 using TravelWebApp.Components;
 using TravelWebApp.Extensions;
-using TravelWebApp.Services.Implementations;
-using TravelWebApp.Services.Interfaces;
 using TravelWebApp.Infrastrcuture.api.handlers;
+using TravelWebApp.Infrastrcuture.api.Services.Interfaces;
+using TravelWebApp.Infrastrcuture.api.Services.Implementations;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 1. Настройка компонентов
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 builder.Services.AddCascadingAuthenticationState();
 
-// 2. Умная настройка HttpClient для Docker
-// Если приложение видит, что оно в контейнере, оно использует имя сервиса, иначе - localhost
+
 // var backendUrl = Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true" 
 //                  ? "http://backend-container:8080" 
 //                  : "http://localhost:8080";
 var backendUrl = "http://192.168.1.81:5180";
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(backendUrl) });
 
-// 3. Настройка заголовков для работы за прокси (Docker)
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
     options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
@@ -37,7 +34,7 @@ builder.Services.AddHttpClient();
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddScoped<IOtpService, OtpService>();
 
-// 4. Авторизация
+// 4.Authorization
 builder.Services.AddScoped<CustomAuthStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider>(sp =>
     sp.GetRequiredService<CustomAuthStateProvider>());
@@ -59,8 +56,7 @@ builder.Services.AddAuthentication(options => {
 
 var app = builder.Build();
 
-// ПОРЯДОК MIDDLEWARE КРИТИЧЕСКИ ВАЖЕН
-app.UseForwardedHeaders(); // Должно быть первым
+app.UseForwardedHeaders(); 
 
 if (!app.Environment.IsDevelopment())
 {
@@ -68,8 +64,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-// app.UseHttpsRedirection(); // В Docker часто мешает, если не настроены сертификаты
-
+// app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseAuthentication();
